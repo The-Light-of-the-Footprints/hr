@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.EngageSubjectsMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.EngageSubjects">
+    <id column="sub_id" jdbcType="SMALLINT" property="subId" />
+    <result column="second_kind_id" jdbcType="SMALLINT" property="secondKindId" />
+    <result column="register" jdbcType="VARCHAR" property="register" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="derivation" jdbcType="VARCHAR" property="derivation" />
+    <result column="correct_key" jdbcType="VARCHAR" property="correctKey" />
+    <result column="changer" jdbcType="VARCHAR" property="changer" />
+    <result column="change_time" jdbcType="TIMESTAMP" property="changeTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hr.entity.EngageSubjectsWithBLOBs">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="key_a" jdbcType="LONGVARCHAR" property="keyA" />
+    <result column="key_b" jdbcType="LONGVARCHAR" property="keyB" />
+    <result column="key_c" jdbcType="LONGVARCHAR" property="keyC" />
+    <result column="key_d" jdbcType="LONGVARCHAR" property="keyD" />
+    <result column="key_e" jdbcType="LONGVARCHAR" property="keyE" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sub_id, second_kind_id, register, regist_time, derivation, correct_key, changer, 
+    change_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content, key_a, key_b, key_c, key_d, key_e
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hr.entity.EngageSubjectsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from engage_subjects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hr.entity.EngageSubjectsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from engage_subjects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from engage_subjects
+    where sub_id = #{subId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from engage_subjects
+    where sub_id = #{subId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.EngageSubjectsExample">
+    delete from engage_subjects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.EngageSubjectsWithBLOBs">
+    insert into engage_subjects (sub_id, second_kind_id, register, 
+      regist_time, derivation, correct_key, 
+      changer, change_time, content, 
+      key_a, key_b, key_c, 
+      key_d, key_e)
+    values (#{subId,jdbcType=SMALLINT}, #{secondKindId,jdbcType=SMALLINT}, #{register,jdbcType=VARCHAR}, 
+      #{registTime,jdbcType=TIMESTAMP}, #{derivation,jdbcType=VARCHAR}, #{correctKey,jdbcType=VARCHAR}, 
+      #{changer,jdbcType=VARCHAR}, #{changeTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}, 
+      #{keyA,jdbcType=LONGVARCHAR}, #{keyB,jdbcType=LONGVARCHAR}, #{keyC,jdbcType=LONGVARCHAR}, 
+      #{keyD,jdbcType=LONGVARCHAR}, #{keyE,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.EngageSubjectsWithBLOBs">
+    insert into engage_subjects
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        sub_id,
+      </if>
+      <if test="secondKindId != null">
+        second_kind_id,
+      </if>
+      <if test="register != null">
+        register,
+      </if>
+      <if test="registTime != null">
+        regist_time,
+      </if>
+      <if test="derivation != null">
+        derivation,
+      </if>
+      <if test="correctKey != null">
+        correct_key,
+      </if>
+      <if test="changer != null">
+        changer,
+      </if>
+      <if test="changeTime != null">
+        change_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="keyA != null">
+        key_a,
+      </if>
+      <if test="keyB != null">
+        key_b,
+      </if>
+      <if test="keyC != null">
+        key_c,
+      </if>
+      <if test="keyD != null">
+        key_d,
+      </if>
+      <if test="keyE != null">
+        key_e,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subId != null">
+        #{subId,jdbcType=SMALLINT},
+      </if>
+      <if test="secondKindId != null">
+        #{secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="derivation != null">
+        #{derivation,jdbcType=VARCHAR},
+      </if>
+      <if test="correctKey != null">
+        #{correctKey,jdbcType=VARCHAR},
+      </if>
+      <if test="changer != null">
+        #{changer,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null">
+        #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyA != null">
+        #{keyA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyB != null">
+        #{keyB,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyC != null">
+        #{keyC,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyD != null">
+        #{keyD,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyE != null">
+        #{keyE,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.EngageSubjectsExample" resultType="java.lang.Long">
+    select count(*) from engage_subjects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update engage_subjects
+    <set>
+      <if test="record.subId != null">
+        sub_id = #{record.subId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.secondKindId != null">
+        second_kind_id = #{record.secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.register != null">
+        register = #{record.register,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registTime != null">
+        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.derivation != null">
+        derivation = #{record.derivation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.correctKey != null">
+        correct_key = #{record.correctKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changer != null">
+        changer = #{record.changer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeTime != null">
+        change_time = #{record.changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyA != null">
+        key_a = #{record.keyA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyB != null">
+        key_b = #{record.keyB,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyC != null">
+        key_c = #{record.keyC,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyD != null">
+        key_d = #{record.keyD,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.keyE != null">
+        key_e = #{record.keyE,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update engage_subjects
+    set sub_id = #{record.subId,jdbcType=SMALLINT},
+      second_kind_id = #{record.secondKindId,jdbcType=SMALLINT},
+      register = #{record.register,jdbcType=VARCHAR},
+      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      derivation = #{record.derivation,jdbcType=VARCHAR},
+      correct_key = #{record.correctKey,jdbcType=VARCHAR},
+      changer = #{record.changer,jdbcType=VARCHAR},
+      change_time = #{record.changeTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      key_a = #{record.keyA,jdbcType=LONGVARCHAR},
+      key_b = #{record.keyB,jdbcType=LONGVARCHAR},
+      key_c = #{record.keyC,jdbcType=LONGVARCHAR},
+      key_d = #{record.keyD,jdbcType=LONGVARCHAR},
+      key_e = #{record.keyE,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update engage_subjects
+    set sub_id = #{record.subId,jdbcType=SMALLINT},
+      second_kind_id = #{record.secondKindId,jdbcType=SMALLINT},
+      register = #{record.register,jdbcType=VARCHAR},
+      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      derivation = #{record.derivation,jdbcType=VARCHAR},
+      correct_key = #{record.correctKey,jdbcType=VARCHAR},
+      changer = #{record.changer,jdbcType=VARCHAR},
+      change_time = #{record.changeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.EngageSubjectsWithBLOBs">
+    update engage_subjects
+    <set>
+      <if test="secondKindId != null">
+        second_kind_id = #{secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        register = #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="derivation != null">
+        derivation = #{derivation,jdbcType=VARCHAR},
+      </if>
+      <if test="correctKey != null">
+        correct_key = #{correctKey,jdbcType=VARCHAR},
+      </if>
+      <if test="changer != null">
+        changer = #{changer,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null">
+        change_time = #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyA != null">
+        key_a = #{keyA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyB != null">
+        key_b = #{keyB,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyC != null">
+        key_c = #{keyC,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyD != null">
+        key_d = #{keyD,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyE != null">
+        key_e = #{keyE,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sub_id = #{subId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hr.entity.EngageSubjectsWithBLOBs">
+    update engage_subjects
+    set second_kind_id = #{secondKindId,jdbcType=SMALLINT},
+      register = #{register,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      derivation = #{derivation,jdbcType=VARCHAR},
+      correct_key = #{correctKey,jdbcType=VARCHAR},
+      changer = #{changer,jdbcType=VARCHAR},
+      change_time = #{changeTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      key_a = #{keyA,jdbcType=LONGVARCHAR},
+      key_b = #{keyB,jdbcType=LONGVARCHAR},
+      key_c = #{keyC,jdbcType=LONGVARCHAR},
+      key_d = #{keyD,jdbcType=LONGVARCHAR},
+      key_e = #{keyE,jdbcType=LONGVARCHAR}
+    where sub_id = #{subId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.EngageSubjects">
+    update engage_subjects
+    set second_kind_id = #{secondKindId,jdbcType=SMALLINT},
+      register = #{register,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      derivation = #{derivation,jdbcType=VARCHAR},
+      correct_key = #{correctKey,jdbcType=VARCHAR},
+      changer = #{changer,jdbcType=VARCHAR},
+      change_time = #{changeTime,jdbcType=TIMESTAMP}
+    where sub_id = #{subId,jdbcType=SMALLINT}
+  </update>
+</mapper>

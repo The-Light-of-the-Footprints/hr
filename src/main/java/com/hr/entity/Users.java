@@ -9,8 +9,6 @@ public class Users {
 
     private String uPassword;
 
-    private Integer uRoleid;
-
     public Integer getuId() {
         return uId;
     }
@@ -41,13 +39,5 @@ public class Users {
 
     public void setuPassword(String uPassword) {
         this.uPassword = uPassword == null ? null : uPassword.trim();
-    }
-
-    public Integer getuRoleid() {
-        return uRoleid;
-    }
-
-    public void setuRoleid(Integer uRoleid) {
-        this.uRoleid = uRoleid;
     }
 }

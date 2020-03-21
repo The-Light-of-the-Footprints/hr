@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.MajorChangeMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.MajorChange">
+    <id column="mch_id" jdbcType="SMALLINT" property="mchId" />
+    <result column="third_kind_id" jdbcType="SMALLINT" property="thirdKindId" />
+    <result column="major_id" jdbcType="SMALLINT" property="majorId" />
+    <result column="new_third_kind_id" jdbcType="SMALLINT" property="newThirdKindId" />
+    <result column="new_major_id" jdbcType="SMALLINT" property="newMajorId" />
+    <result column="human_id" jdbcType="VARCHAR" property="humanId" />
+    <result column="salary_standard_id" jdbcType="VARCHAR" property="salaryStandardId" />
+    <result column="salary_sum" jdbcType="DECIMAL" property="salarySum" />
+    <result column="new_salary_standard_id" jdbcType="VARCHAR" property="newSalaryStandardId" />
+    <result column="new_salary_sum" jdbcType="DECIMAL" property="newSalarySum" />
+    <result column="check_status" jdbcType="SMALLINT" property="checkStatus" />
+    <result column="register" jdbcType="VARCHAR" property="register" />
+    <result column="checker" jdbcType="VARCHAR" property="checker" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hr.entity.MajorChangeWithBLOBs">
+    <result column="change_reason" jdbcType="LONGVARCHAR" property="changeReason" />
+    <result column="check_reason" jdbcType="LONGVARCHAR" property="checkReason" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mch_id, third_kind_id, major_id, new_third_kind_id, new_major_id, human_id, salary_standard_id, 
+    salary_sum, new_salary_standard_id, new_salary_sum, check_status, register, checker, 
+    regist_time, check_time
+  </sql>
+  <sql id="Blob_Column_List">
+    change_reason, check_reason
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hr.entity.MajorChangeExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from major_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hr.entity.MajorChangeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from major_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from major_change
+    where mch_id = #{mchId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from major_change
+    where mch_id = #{mchId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.MajorChangeExample">
+    delete from major_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.MajorChangeWithBLOBs">
+    insert into major_change (mch_id, third_kind_id, major_id, 
+      new_third_kind_id, new_major_id, human_id, 
+      salary_standard_id, salary_sum, new_salary_standard_id, 
+      new_salary_sum, check_status, register, 
+      checker, regist_time, check_time, 
+      change_reason, check_reason)
+    values (#{mchId,jdbcType=SMALLINT}, #{thirdKindId,jdbcType=SMALLINT}, #{majorId,jdbcType=SMALLINT}, 
+      #{newThirdKindId,jdbcType=SMALLINT}, #{newMajorId,jdbcType=SMALLINT}, #{humanId,jdbcType=VARCHAR}, 
+      #{salaryStandardId,jdbcType=VARCHAR}, #{salarySum,jdbcType=DECIMAL}, #{newSalaryStandardId,jdbcType=VARCHAR}, 
+      #{newSalarySum,jdbcType=DECIMAL}, #{checkStatus,jdbcType=SMALLINT}, #{register,jdbcType=VARCHAR}, 
+      #{checker,jdbcType=VARCHAR}, #{registTime,jdbcType=TIMESTAMP}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{changeReason,jdbcType=LONGVARCHAR}, #{checkReason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.MajorChangeWithBLOBs">
+    insert into major_change
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mchId != null">
+        mch_id,
+      </if>
+      <if test="thirdKindId != null">
+        third_kind_id,
+      </if>
+      <if test="majorId != null">
+        major_id,
+      </if>
+      <if test="newThirdKindId != null">
+        new_third_kind_id,
+      </if>
+      <if test="newMajorId != null">
+        new_major_id,
+      </if>
+      <if test="humanId != null">
+        human_id,
+      </if>
+      <if test="salaryStandardId != null">
+        salary_standard_id,
+      </if>
+      <if test="salarySum != null">
+        salary_sum,
+      </if>
+      <if test="newSalaryStandardId != null">
+        new_salary_standard_id,
+      </if>
+      <if test="newSalarySum != null">
+        new_salary_sum,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="register != null">
+        register,
+      </if>
+      <if test="checker != null">
+        checker,
+      </if>
+      <if test="registTime != null">
+        regist_time,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="changeReason != null">
+        change_reason,
+      </if>
+      <if test="checkReason != null">
+        check_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mchId != null">
+        #{mchId,jdbcType=SMALLINT},
+      </if>
+      <if test="thirdKindId != null">
+        #{thirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="majorId != null">
+        #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="newThirdKindId != null">
+        #{newThirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="newMajorId != null">
+        #{newMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="humanId != null">
+        #{humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryStandardId != null">
+        #{salaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="salarySum != null">
+        #{salarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="newSalaryStandardId != null">
+        #{newSalaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="newSalarySum != null">
+        #{newSalarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeReason != null">
+        #{changeReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="checkReason != null">
+        #{checkReason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.MajorChangeExample" resultType="java.lang.Long">
+    select count(*) from major_change
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update major_change
+    <set>
+      <if test="record.mchId != null">
+        mch_id = #{record.mchId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.thirdKindId != null">
+        third_kind_id = #{record.thirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.majorId != null">
+        major_id = #{record.majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.newThirdKindId != null">
+        new_third_kind_id = #{record.newThirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.newMajorId != null">
+        new_major_id = #{record.newMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.humanId != null">
+        human_id = #{record.humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryStandardId != null">
+        salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salarySum != null">
+        salary_sum = #{record.salarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.newSalaryStandardId != null">
+        new_salary_standard_id = #{record.newSalaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newSalarySum != null">
+        new_salary_sum = #{record.newSalarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.checkStatus != null">
+        check_status = #{record.checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.register != null">
+        register = #{record.register,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checker != null">
+        checker = #{record.checker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registTime != null">
+        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkTime != null">
+        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.changeReason != null">
+        change_reason = #{record.changeReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.checkReason != null">
+        check_reason = #{record.checkReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update major_change
+    set mch_id = #{record.mchId,jdbcType=SMALLINT},
+      third_kind_id = #{record.thirdKindId,jdbcType=SMALLINT},
+      major_id = #{record.majorId,jdbcType=SMALLINT},
+      new_third_kind_id = #{record.newThirdKindId,jdbcType=SMALLINT},
+      new_major_id = #{record.newMajorId,jdbcType=SMALLINT},
+      human_id = #{record.humanId,jdbcType=VARCHAR},
+      salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
+      salary_sum = #{record.salarySum,jdbcType=DECIMAL},
+      new_salary_standard_id = #{record.newSalaryStandardId,jdbcType=VARCHAR},
+      new_salary_sum = #{record.newSalarySum,jdbcType=DECIMAL},
+      check_status = #{record.checkStatus,jdbcType=SMALLINT},
+      register = #{record.register,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      change_reason = #{record.changeReason,jdbcType=LONGVARCHAR},
+      check_reason = #{record.checkReason,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update major_change
+    set mch_id = #{record.mchId,jdbcType=SMALLINT},
+      third_kind_id = #{record.thirdKindId,jdbcType=SMALLINT},
+      major_id = #{record.majorId,jdbcType=SMALLINT},
+      new_third_kind_id = #{record.newThirdKindId,jdbcType=SMALLINT},
+      new_major_id = #{record.newMajorId,jdbcType=SMALLINT},
+      human_id = #{record.humanId,jdbcType=VARCHAR},
+      salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
+      salary_sum = #{record.salarySum,jdbcType=DECIMAL},
+      new_salary_standard_id = #{record.newSalaryStandardId,jdbcType=VARCHAR},
+      new_salary_sum = #{record.newSalarySum,jdbcType=DECIMAL},
+      check_status = #{record.checkStatus,jdbcType=SMALLINT},
+      register = #{record.register,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.MajorChangeWithBLOBs">
+    update major_change
+    <set>
+      <if test="thirdKindId != null">
+        third_kind_id = #{thirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="majorId != null">
+        major_id = #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="newThirdKindId != null">
+        new_third_kind_id = #{newThirdKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="newMajorId != null">
+        new_major_id = #{newMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="humanId != null">
+        human_id = #{humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryStandardId != null">
+        salary_standard_id = #{salaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="salarySum != null">
+        salary_sum = #{salarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="newSalaryStandardId != null">
+        new_salary_standard_id = #{newSalaryStandardId,jdbcType=VARCHAR},
+      </if>
+      <if test="newSalarySum != null">
+        new_salary_sum = #{newSalarySum,jdbcType=DECIMAL},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        register = #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        checker = #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeReason != null">
+        change_reason = #{changeReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="checkReason != null">
+        check_reason = #{checkReason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where mch_id = #{mchId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hr.entity.MajorChangeWithBLOBs">
+    update major_change
+    set third_kind_id = #{thirdKindId,jdbcType=SMALLINT},
+      major_id = #{majorId,jdbcType=SMALLINT},
+      new_third_kind_id = #{newThirdKindId,jdbcType=SMALLINT},
+      new_major_id = #{newMajorId,jdbcType=SMALLINT},
+      human_id = #{humanId,jdbcType=VARCHAR},
+      salary_standard_id = #{salaryStandardId,jdbcType=VARCHAR},
+      salary_sum = #{salarySum,jdbcType=DECIMAL},
+      new_salary_standard_id = #{newSalaryStandardId,jdbcType=VARCHAR},
+      new_salary_sum = #{newSalarySum,jdbcType=DECIMAL},
+      check_status = #{checkStatus,jdbcType=SMALLINT},
+      register = #{register,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      change_reason = #{changeReason,jdbcType=LONGVARCHAR},
+      check_reason = #{checkReason,jdbcType=LONGVARCHAR}
+    where mch_id = #{mchId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.MajorChange">
+    update major_change
+    set third_kind_id = #{thirdKindId,jdbcType=SMALLINT},
+      major_id = #{majorId,jdbcType=SMALLINT},
+      new_third_kind_id = #{newThirdKindId,jdbcType=SMALLINT},
+      new_major_id = #{newMajorId,jdbcType=SMALLINT},
+      human_id = #{humanId,jdbcType=VARCHAR},
+      salary_standard_id = #{salaryStandardId,jdbcType=VARCHAR},
+      salary_sum = #{salarySum,jdbcType=DECIMAL},
+      new_salary_standard_id = #{newSalaryStandardId,jdbcType=VARCHAR},
+      new_salary_sum = #{newSalarySum,jdbcType=DECIMAL},
+      check_status = #{checkStatus,jdbcType=SMALLINT},
+      register = #{register,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP}
+    where mch_id = #{mchId,jdbcType=SMALLINT}
+  </update>
+</mapper>
