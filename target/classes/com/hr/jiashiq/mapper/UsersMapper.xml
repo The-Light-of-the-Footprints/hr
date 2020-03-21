@@ -6,6 +6,7 @@
     <result column="u_name" jdbcType="VARCHAR" property="uName" />
     <result column="u_true_name" jdbcType="VARCHAR" property="uTrueName" />
     <result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+    <result column="u_roleid" jdbcType="INTEGER" property="uRoleid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,8 +67,20 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    u_id, u_name, u_true_name, u_password
+    u_id, u_name, u_true_name, u_password, u_roleid
   </sql>
+  
+  <resultMap type="com.hr.entity.Users" id="userRole">
+ 		<id column="u_id" property="uId"></id>
+ 		<result column="u_name" jdbcType="VARCHAR" property="uName" />
+  	 	<result column="u_true_name" jdbcType="VARCHAR" property="uTrueName" />
+   		<result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+ 		<association property="role" column="u_roleid" select="com.hr.jiashiq.mapper.SysRoleMapper.queryRoleById"></association>
+ 	</resultMap>
+ 	<select id="queryUsersByNameAndPwd" resultMap="userRole">
+ 		select * from users where u_name=#{uName} and u_password=#{uPassword}
+ 	</select>
+  
   <select id="selectByExample" parameterType="com.hr.entity.UsersExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -100,9 +113,9 @@
   </delete>
   <insert id="insert" parameterType="com.hr.entity.Users">
     insert into users (u_id, u_name, u_true_name, 
-      u_password)
+      u_password, u_roleid)
     values (#{uId,jdbcType=INTEGER}, #{uName,jdbcType=VARCHAR}, #{uTrueName,jdbcType=VARCHAR}, 
-      #{uPassword,jdbcType=VARCHAR})
+      #{uPassword,jdbcType=VARCHAR}, #{uRoleid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.hr.entity.Users">
     insert into users
@@ -119,6 +132,9 @@
       <if test="uPassword != null">
         u_password,
       </if>
+      <if test="uRoleid != null">
+        u_roleid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uId != null">
@@ -132,6 +148,9 @@
       </if>
       <if test="uPassword != null">
         #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uRoleid != null">
+        #{uRoleid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -156,6 +175,9 @@
       <if test="record.uPassword != null">
         u_password = #{record.uPassword,jdbcType=VARCHAR},
       </if>
+      <if test="record.uRoleid != null">
+        u_roleid = #{record.uRoleid,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +188,8 @@
     set u_id = #{record.uId,jdbcType=INTEGER},
       u_name = #{record.uName,jdbcType=VARCHAR},
       u_true_name = #{record.uTrueName,jdbcType=VARCHAR},
-      u_password = #{record.uPassword,jdbcType=VARCHAR}
+      u_password = #{record.uPassword,jdbcType=VARCHAR},
+      u_roleid = #{record.uRoleid,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +206,9 @@
       <if test="uPassword != null">
         u_password = #{uPassword,jdbcType=VARCHAR},
       </if>
+      <if test="uRoleid != null">
+        u_roleid = #{uRoleid,jdbcType=INTEGER},
+      </if>
     </set>
     where u_id = #{uId,jdbcType=INTEGER}
   </update>
@@ -190,7 +216,8 @@
     update users
     set u_name = #{uName,jdbcType=VARCHAR},
       u_true_name = #{uTrueName,jdbcType=VARCHAR},
-      u_password = #{uPassword,jdbcType=VARCHAR}
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_roleid = #{uRoleid,jdbcType=INTEGER}
     where u_id = #{uId,jdbcType=INTEGER}
   </update>
 </mapper>

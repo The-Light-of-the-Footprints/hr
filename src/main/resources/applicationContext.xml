@@ -36,8 +36,8 @@
 	</bean>
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-		<property name="basePackage" ref="com.hr.*.mapper"></property>
+		<property name="sqlSessionFactoryBeanName" value="SqlSessionFactoryBean"></property>
+		<property name="basePackage" value="com.hr.*.mapper"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	

@@ -59,5 +59,8 @@
 		<table tableName="salary_standard_details" domainObjectName="SalaryStandardDetails"/>
 		<table tableName="training" domainObjectName="Training"></table>
 		<table tableName="users" domainObjectName="Users"></table>
+		<table tableName="sys_right" domainObjectName="SysRight"/>
+		<table tableName="sys_right_role" domainObjectName="SysRightRole"></table>
+		<table tableName="sys_role" domainObjectName="SysRole"></table>
 	</context>
 </generatorConfiguration>

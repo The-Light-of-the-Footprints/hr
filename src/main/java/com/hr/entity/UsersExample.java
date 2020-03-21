@@ -373,6 +373,66 @@ public class UsersExample {
             addCriterion("u_password not between", value1, value2, "uPassword");
             return (Criteria) this;
         }
+
+        public Criteria andURoleidIsNull() {
+            addCriterion("u_roleid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidIsNotNull() {
+            addCriterion("u_roleid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidEqualTo(Integer value) {
+            addCriterion("u_roleid =", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidNotEqualTo(Integer value) {
+            addCriterion("u_roleid <>", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidGreaterThan(Integer value) {
+            addCriterion("u_roleid >", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("u_roleid >=", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidLessThan(Integer value) {
+            addCriterion("u_roleid <", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidLessThanOrEqualTo(Integer value) {
+            addCriterion("u_roleid <=", value, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidIn(List<Integer> values) {
+            addCriterion("u_roleid in", values, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidNotIn(List<Integer> values) {
+            addCriterion("u_roleid not in", values, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidBetween(Integer value1, Integer value2) {
+            addCriterion("u_roleid between", value1, value2, "uRoleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andURoleidNotBetween(Integer value1, Integer value2) {
+            addCriterion("u_roleid not between", value1, value2, "uRoleid");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

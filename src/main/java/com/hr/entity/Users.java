@@ -9,7 +9,19 @@ public class Users {
 
     private String uPassword;
 
-    public Integer getuId() {
+    private Integer uRoleid;
+    
+    private SysRole role;
+
+    public SysRole getRole() {
+		return role;
+	}
+
+	public void setRole(SysRole role) {
+		this.role = role;
+	}
+
+	public Integer getuId() {
         return uId;
     }
 
@@ -40,4 +52,19 @@ public class Users {
     public void setuPassword(String uPassword) {
         this.uPassword = uPassword == null ? null : uPassword.trim();
     }
+
+    public Integer getuRoleid() {
+        return uRoleid;
+    }
+
+    public void setuRoleid(Integer uRoleid) {
+        this.uRoleid = uRoleid;
+    }
+
+	@Override
+	public String toString() {
+		return "Users [uId=" + uId + ", uName=" + uName + ", uTrueName=" + uTrueName + ", uPassword=" + uPassword
+				+ ", uRoleid=" + uRoleid + ", role=" + role + "]";
+	}
+    
 }
