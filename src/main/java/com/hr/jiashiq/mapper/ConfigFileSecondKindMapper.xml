@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.ConfigFileSecondKindMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.ConfigFileSecondKind">
+    <id column="second_kind_id" jdbcType="INTEGER" property="secondKindId" />
+    <result column="second_kind_name" jdbcType="VARCHAR" property="secondKindName" />
+    <result column="first_kind_id" jdbcType="INTEGER" property="firstKindId" />
+    <result column="second_salary_id" jdbcType="VARCHAR" property="secondSalaryId" />
+    <result column="second_sale_id" jdbcType="VARCHAR" property="secondSaleId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    second_kind_id, second_kind_name, first_kind_id, second_salary_id, second_sale_id
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.ConfigFileSecondKindExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_file_second_kind
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from config_file_second_kind
+    where second_kind_id = #{secondKindId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from config_file_second_kind
+    where second_kind_id = #{secondKindId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.ConfigFileSecondKindExample">
+    delete from config_file_second_kind
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.ConfigFileSecondKind">
+    insert into config_file_second_kind (second_kind_id, second_kind_name, first_kind_id, 
+      second_salary_id, second_sale_id)
+    values (#{secondKindId,jdbcType=INTEGER}, #{secondKindName,jdbcType=VARCHAR}, #{firstKindId,jdbcType=INTEGER}, 
+      #{secondSalaryId,jdbcType=VARCHAR}, #{secondSaleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.ConfigFileSecondKind">
+    insert into config_file_second_kind
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="secondKindId != null">
+        second_kind_id,
+      </if>
+      <if test="secondKindName != null">
+        second_kind_name,
+      </if>
+      <if test="firstKindId != null">
+        first_kind_id,
+      </if>
+      <if test="secondSalaryId != null">
+        second_salary_id,
+      </if>
+      <if test="secondSaleId != null">
+        second_sale_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="secondKindId != null">
+        #{secondKindId,jdbcType=INTEGER},
+      </if>
+      <if test="secondKindName != null">
+        #{secondKindName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstKindId != null">
+        #{firstKindId,jdbcType=INTEGER},
+      </if>
+      <if test="secondSalaryId != null">
+        #{secondSalaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSaleId != null">
+        #{secondSaleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.ConfigFileSecondKindExample" resultType="java.lang.Long">
+    select count(*) from config_file_second_kind
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config_file_second_kind
+    <set>
+      <if test="record.secondKindId != null">
+        second_kind_id = #{record.secondKindId,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondKindName != null">
+        second_kind_name = #{record.secondKindName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstKindId != null">
+        first_kind_id = #{record.firstKindId,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondSalaryId != null">
+        second_salary_id = #{record.secondSalaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSaleId != null">
+        second_sale_id = #{record.secondSaleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config_file_second_kind
+    set second_kind_id = #{record.secondKindId,jdbcType=INTEGER},
+      second_kind_name = #{record.secondKindName,jdbcType=VARCHAR},
+      first_kind_id = #{record.firstKindId,jdbcType=INTEGER},
+      second_salary_id = #{record.secondSalaryId,jdbcType=VARCHAR},
+      second_sale_id = #{record.secondSaleId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.ConfigFileSecondKind">
+    update config_file_second_kind
+    <set>
+      <if test="secondKindName != null">
+        second_kind_name = #{secondKindName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstKindId != null">
+        first_kind_id = #{firstKindId,jdbcType=INTEGER},
+      </if>
+      <if test="secondSalaryId != null">
+        second_salary_id = #{secondSalaryId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSaleId != null">
+        second_sale_id = #{secondSaleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where second_kind_id = #{secondKindId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.ConfigFileSecondKind">
+    update config_file_second_kind
+    set second_kind_name = #{secondKindName,jdbcType=VARCHAR},
+      first_kind_id = #{firstKindId,jdbcType=INTEGER},
+      second_salary_id = #{secondSalaryId,jdbcType=VARCHAR},
+      second_sale_id = #{secondSaleId,jdbcType=VARCHAR}
+    where second_kind_id = #{secondKindId,jdbcType=INTEGER}
+  </update>
+</mapper>

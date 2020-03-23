@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.EngageExamDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.EngageExamDetails">
+    <id column="exd_id" jdbcType="SMALLINT" property="exdId" />
+    <result column="exam_number" jdbcType="VARCHAR" property="examNumber" />
+    <result column="second_kind_id" jdbcType="SMALLINT" property="secondKindId" />
+    <result column="question_amount" jdbcType="SMALLINT" property="questionAmount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    exd_id, exam_number, second_kind_id, question_amount
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.EngageExamDetailsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from engage_exam_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from engage_exam_details
+    where exd_id = #{exdId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from engage_exam_details
+    where exd_id = #{exdId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.EngageExamDetailsExample">
+    delete from engage_exam_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.EngageExamDetails">
+    insert into engage_exam_details (exd_id, exam_number, second_kind_id, 
+      question_amount)
+    values (#{exdId,jdbcType=SMALLINT}, #{examNumber,jdbcType=VARCHAR}, #{secondKindId,jdbcType=SMALLINT}, 
+      #{questionAmount,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.EngageExamDetails">
+    insert into engage_exam_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exdId != null">
+        exd_id,
+      </if>
+      <if test="examNumber != null">
+        exam_number,
+      </if>
+      <if test="secondKindId != null">
+        second_kind_id,
+      </if>
+      <if test="questionAmount != null">
+        question_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exdId != null">
+        #{exdId,jdbcType=SMALLINT},
+      </if>
+      <if test="examNumber != null">
+        #{examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="secondKindId != null">
+        #{secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="questionAmount != null">
+        #{questionAmount,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.EngageExamDetailsExample" resultType="java.lang.Long">
+    select count(*) from engage_exam_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update engage_exam_details
+    <set>
+      <if test="record.exdId != null">
+        exd_id = #{record.exdId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.examNumber != null">
+        exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondKindId != null">
+        second_kind_id = #{record.secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.questionAmount != null">
+        question_amount = #{record.questionAmount,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update engage_exam_details
+    set exd_id = #{record.exdId,jdbcType=SMALLINT},
+      exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      second_kind_id = #{record.secondKindId,jdbcType=SMALLINT},
+      question_amount = #{record.questionAmount,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.EngageExamDetails">
+    update engage_exam_details
+    <set>
+      <if test="examNumber != null">
+        exam_number = #{examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="secondKindId != null">
+        second_kind_id = #{secondKindId,jdbcType=SMALLINT},
+      </if>
+      <if test="questionAmount != null">
+        question_amount = #{questionAmount,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where exd_id = #{exdId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.EngageExamDetails">
+    update engage_exam_details
+    set exam_number = #{examNumber,jdbcType=VARCHAR},
+      second_kind_id = #{secondKindId,jdbcType=SMALLINT},
+      question_amount = #{questionAmount,jdbcType=SMALLINT}
+    where exd_id = #{exdId,jdbcType=SMALLINT}
+  </update>
+</mapper>

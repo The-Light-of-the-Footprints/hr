@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.EngageExamMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.EngageExam">
+    <id column="exam_number" jdbcType="VARCHAR" property="examNumber" />
+    <result column="major_id" jdbcType="SMALLINT" property="majorId" />
+    <result column="register" jdbcType="VARCHAR" property="register" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="limite_time" jdbcType="INTEGER" property="limiteTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    exam_number, major_id, register, regist_time, limite_time
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.EngageExamExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from engage_exam
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from engage_exam
+    where exam_number = #{examNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from engage_exam
+    where exam_number = #{examNumber,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.EngageExamExample">
+    delete from engage_exam
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.EngageExam">
+    insert into engage_exam (exam_number, major_id, register, 
+      regist_time, limite_time)
+    values (#{examNumber,jdbcType=VARCHAR}, #{majorId,jdbcType=SMALLINT}, #{register,jdbcType=VARCHAR}, 
+      #{registTime,jdbcType=TIMESTAMP}, #{limiteTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.EngageExam">
+    insert into engage_exam
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="examNumber != null">
+        exam_number,
+      </if>
+      <if test="majorId != null">
+        major_id,
+      </if>
+      <if test="register != null">
+        register,
+      </if>
+      <if test="registTime != null">
+        regist_time,
+      </if>
+      <if test="limiteTime != null">
+        limite_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="examNumber != null">
+        #{examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null">
+        #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limiteTime != null">
+        #{limiteTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.EngageExamExample" resultType="java.lang.Long">
+    select count(*) from engage_exam
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update engage_exam
+    <set>
+      <if test="record.examNumber != null">
+        exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorId != null">
+        major_id = #{record.majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.register != null">
+        register = #{record.register,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registTime != null">
+        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.limiteTime != null">
+        limite_time = #{record.limiteTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update engage_exam
+    set exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=SMALLINT},
+      register = #{record.register,jdbcType=VARCHAR},
+      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      limite_time = #{record.limiteTime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.EngageExam">
+    update engage_exam
+    <set>
+      <if test="majorId != null">
+        major_id = #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="register != null">
+        register = #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="registTime != null">
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limiteTime != null">
+        limite_time = #{limiteTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where exam_number = #{examNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.EngageExam">
+    update engage_exam
+    set major_id = #{majorId,jdbcType=SMALLINT},
+      register = #{register,jdbcType=VARCHAR},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      limite_time = #{limiteTime,jdbcType=INTEGER}
+    where exam_number = #{examNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

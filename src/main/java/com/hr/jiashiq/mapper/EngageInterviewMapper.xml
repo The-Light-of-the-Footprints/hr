@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.EngageInterviewMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.EngageInterview">
+    <id column="ein_id" jdbcType="SMALLINT" property="einId" />
+    <result column="human_name" jdbcType="VARCHAR" property="humanName" />
+    <result column="human_major_id" jdbcType="SMALLINT" property="humanMajorId" />
+    <result column="image_degree" jdbcType="VARCHAR" property="imageDegree" />
+    <result column="native_language_degree" jdbcType="VARCHAR" property="nativeLanguageDegree" />
+    <result column="foreign_language_degree" jdbcType="VARCHAR" property="foreignLanguageDegree" />
+    <result column="response_speed_degree" jdbcType="VARCHAR" property="responseSpeedDegree" />
+    <result column="EQ_degree" jdbcType="VARCHAR" property="eqDegree" />
+    <result column="IQ_degree" jdbcType="VARCHAR" property="iqDegree" />
+    <result column="multi_quality_degree" jdbcType="VARCHAR" property="multiQualityDegree" />
+    <result column="register" jdbcType="VARCHAR" property="register" />
+    <result column="checker" jdbcType="VARCHAR" property="checker" />
+    <result column="registe_time" jdbcType="TIMESTAMP" property="registeTime" />
+    <result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+    <result column="resume_id" jdbcType="SMALLINT" property="resumeId" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="check_status" jdbcType="SMALLINT" property="checkStatus" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hr.entity.EngageInterviewWithBLOBs">
+    <result column="interview_comment" jdbcType="LONGVARCHAR" property="interviewComment" />
+    <result column="check_comment" jdbcType="LONGVARCHAR" property="checkComment" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ein_id, human_name, human_major_id, image_degree, native_language_degree, foreign_language_degree, 
+    response_speed_degree, EQ_degree, IQ_degree, multi_quality_degree, register, checker, 
+    registe_time, check_time, resume_id, result, check_status
+  </sql>
+  <sql id="Blob_Column_List">
+    interview_comment, check_comment
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hr.entity.EngageInterviewExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from engage_interview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hr.entity.EngageInterviewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from engage_interview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from engage_interview
+    where ein_id = #{einId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from engage_interview
+    where ein_id = #{einId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.EngageInterviewExample">
+    delete from engage_interview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.EngageInterviewWithBLOBs">
+    insert into engage_interview (ein_id, human_name, human_major_id, 
+      image_degree, native_language_degree, foreign_language_degree, 
+      response_speed_degree, EQ_degree, IQ_degree, 
+      multi_quality_degree, register, checker, 
+      registe_time, check_time, resume_id, 
+      result, check_status, interview_comment, 
+      check_comment)
+    values (#{einId,jdbcType=SMALLINT}, #{humanName,jdbcType=VARCHAR}, #{humanMajorId,jdbcType=SMALLINT}, 
+      #{imageDegree,jdbcType=VARCHAR}, #{nativeLanguageDegree,jdbcType=VARCHAR}, #{foreignLanguageDegree,jdbcType=VARCHAR}, 
+      #{responseSpeedDegree,jdbcType=VARCHAR}, #{eqDegree,jdbcType=VARCHAR}, #{iqDegree,jdbcType=VARCHAR}, 
+      #{multiQualityDegree,jdbcType=VARCHAR}, #{register,jdbcType=VARCHAR}, #{checker,jdbcType=VARCHAR}, 
+      #{registeTime,jdbcType=TIMESTAMP}, #{checkTime,jdbcType=TIMESTAMP}, #{resumeId,jdbcType=SMALLINT}, 
+      #{result,jdbcType=VARCHAR}, #{checkStatus,jdbcType=SMALLINT}, #{interviewComment,jdbcType=LONGVARCHAR}, 
+      #{checkComment,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.EngageInterviewWithBLOBs">
+    insert into engage_interview
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="einId != null">
+        ein_id,
+      </if>
+      <if test="humanName != null">
+        human_name,
+      </if>
+      <if test="humanMajorId != null">
+        human_major_id,
+      </if>
+      <if test="imageDegree != null">
+        image_degree,
+      </if>
+      <if test="nativeLanguageDegree != null">
+        native_language_degree,
+      </if>
+      <if test="foreignLanguageDegree != null">
+        foreign_language_degree,
+      </if>
+      <if test="responseSpeedDegree != null">
+        response_speed_degree,
+      </if>
+      <if test="eqDegree != null">
+        EQ_degree,
+      </if>
+      <if test="iqDegree != null">
+        IQ_degree,
+      </if>
+      <if test="multiQualityDegree != null">
+        multi_quality_degree,
+      </if>
+      <if test="register != null">
+        register,
+      </if>
+      <if test="checker != null">
+        checker,
+      </if>
+      <if test="registeTime != null">
+        registe_time,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="resumeId != null">
+        resume_id,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="interviewComment != null">
+        interview_comment,
+      </if>
+      <if test="checkComment != null">
+        check_comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="einId != null">
+        #{einId,jdbcType=SMALLINT},
+      </if>
+      <if test="humanName != null">
+        #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanMajorId != null">
+        #{humanMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="imageDegree != null">
+        #{imageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="nativeLanguageDegree != null">
+        #{nativeLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignLanguageDegree != null">
+        #{foreignLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="responseSpeedDegree != null">
+        #{responseSpeedDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="eqDegree != null">
+        #{eqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="iqDegree != null">
+        #{iqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="multiQualityDegree != null">
+        #{multiQualityDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="register != null">
+        #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="registeTime != null">
+        #{registeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeId != null">
+        #{resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="interviewComment != null">
+        #{interviewComment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="checkComment != null">
+        #{checkComment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.EngageInterviewExample" resultType="java.lang.Long">
+    select count(*) from engage_interview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update engage_interview
+    <set>
+      <if test="record.einId != null">
+        ein_id = #{record.einId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.humanName != null">
+        human_name = #{record.humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanMajorId != null">
+        human_major_id = #{record.humanMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.imageDegree != null">
+        image_degree = #{record.imageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativeLanguageDegree != null">
+        native_language_degree = #{record.nativeLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.foreignLanguageDegree != null">
+        foreign_language_degree = #{record.foreignLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responseSpeedDegree != null">
+        response_speed_degree = #{record.responseSpeedDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eqDegree != null">
+        EQ_degree = #{record.eqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iqDegree != null">
+        IQ_degree = #{record.iqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.multiQualityDegree != null">
+        multi_quality_degree = #{record.multiQualityDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.register != null">
+        register = #{record.register,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checker != null">
+        checker = #{record.checker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeTime != null">
+        registe_time = #{record.registeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkTime != null">
+        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.resumeId != null">
+        resume_id = #{record.resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.result != null">
+        result = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatus != null">
+        check_status = #{record.checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.interviewComment != null">
+        interview_comment = #{record.interviewComment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.checkComment != null">
+        check_comment = #{record.checkComment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update engage_interview
+    set ein_id = #{record.einId,jdbcType=SMALLINT},
+      human_name = #{record.humanName,jdbcType=VARCHAR},
+      human_major_id = #{record.humanMajorId,jdbcType=SMALLINT},
+      image_degree = #{record.imageDegree,jdbcType=VARCHAR},
+      native_language_degree = #{record.nativeLanguageDegree,jdbcType=VARCHAR},
+      foreign_language_degree = #{record.foreignLanguageDegree,jdbcType=VARCHAR},
+      response_speed_degree = #{record.responseSpeedDegree,jdbcType=VARCHAR},
+      EQ_degree = #{record.eqDegree,jdbcType=VARCHAR},
+      IQ_degree = #{record.iqDegree,jdbcType=VARCHAR},
+      multi_quality_degree = #{record.multiQualityDegree,jdbcType=VARCHAR},
+      register = #{record.register,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      registe_time = #{record.registeTime,jdbcType=TIMESTAMP},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      resume_id = #{record.resumeId,jdbcType=SMALLINT},
+      result = #{record.result,jdbcType=VARCHAR},
+      check_status = #{record.checkStatus,jdbcType=SMALLINT},
+      interview_comment = #{record.interviewComment,jdbcType=LONGVARCHAR},
+      check_comment = #{record.checkComment,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update engage_interview
+    set ein_id = #{record.einId,jdbcType=SMALLINT},
+      human_name = #{record.humanName,jdbcType=VARCHAR},
+      human_major_id = #{record.humanMajorId,jdbcType=SMALLINT},
+      image_degree = #{record.imageDegree,jdbcType=VARCHAR},
+      native_language_degree = #{record.nativeLanguageDegree,jdbcType=VARCHAR},
+      foreign_language_degree = #{record.foreignLanguageDegree,jdbcType=VARCHAR},
+      response_speed_degree = #{record.responseSpeedDegree,jdbcType=VARCHAR},
+      EQ_degree = #{record.eqDegree,jdbcType=VARCHAR},
+      IQ_degree = #{record.iqDegree,jdbcType=VARCHAR},
+      multi_quality_degree = #{record.multiQualityDegree,jdbcType=VARCHAR},
+      register = #{record.register,jdbcType=VARCHAR},
+      checker = #{record.checker,jdbcType=VARCHAR},
+      registe_time = #{record.registeTime,jdbcType=TIMESTAMP},
+      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
+      resume_id = #{record.resumeId,jdbcType=SMALLINT},
+      result = #{record.result,jdbcType=VARCHAR},
+      check_status = #{record.checkStatus,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.EngageInterviewWithBLOBs">
+    update engage_interview
+    <set>
+      <if test="humanName != null">
+        human_name = #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanMajorId != null">
+        human_major_id = #{humanMajorId,jdbcType=SMALLINT},
+      </if>
+      <if test="imageDegree != null">
+        image_degree = #{imageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="nativeLanguageDegree != null">
+        native_language_degree = #{nativeLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignLanguageDegree != null">
+        foreign_language_degree = #{foreignLanguageDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="responseSpeedDegree != null">
+        response_speed_degree = #{responseSpeedDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="eqDegree != null">
+        EQ_degree = #{eqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="iqDegree != null">
+        IQ_degree = #{iqDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="multiQualityDegree != null">
+        multi_quality_degree = #{multiQualityDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="register != null">
+        register = #{register,jdbcType=VARCHAR},
+      </if>
+      <if test="checker != null">
+        checker = #{checker,jdbcType=VARCHAR},
+      </if>
+      <if test="registeTime != null">
+        registe_time = #{registeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeId != null">
+        resume_id = #{resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="interviewComment != null">
+        interview_comment = #{interviewComment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="checkComment != null">
+        check_comment = #{checkComment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ein_id = #{einId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hr.entity.EngageInterviewWithBLOBs">
+    update engage_interview
+    set human_name = #{humanName,jdbcType=VARCHAR},
+      human_major_id = #{humanMajorId,jdbcType=SMALLINT},
+      image_degree = #{imageDegree,jdbcType=VARCHAR},
+      native_language_degree = #{nativeLanguageDegree,jdbcType=VARCHAR},
+      foreign_language_degree = #{foreignLanguageDegree,jdbcType=VARCHAR},
+      response_speed_degree = #{responseSpeedDegree,jdbcType=VARCHAR},
+      EQ_degree = #{eqDegree,jdbcType=VARCHAR},
+      IQ_degree = #{iqDegree,jdbcType=VARCHAR},
+      multi_quality_degree = #{multiQualityDegree,jdbcType=VARCHAR},
+      register = #{register,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      registe_time = #{registeTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      resume_id = #{resumeId,jdbcType=SMALLINT},
+      result = #{result,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=SMALLINT},
+      interview_comment = #{interviewComment,jdbcType=LONGVARCHAR},
+      check_comment = #{checkComment,jdbcType=LONGVARCHAR}
+    where ein_id = #{einId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.EngageInterview">
+    update engage_interview
+    set human_name = #{humanName,jdbcType=VARCHAR},
+      human_major_id = #{humanMajorId,jdbcType=SMALLINT},
+      image_degree = #{imageDegree,jdbcType=VARCHAR},
+      native_language_degree = #{nativeLanguageDegree,jdbcType=VARCHAR},
+      foreign_language_degree = #{foreignLanguageDegree,jdbcType=VARCHAR},
+      response_speed_degree = #{responseSpeedDegree,jdbcType=VARCHAR},
+      EQ_degree = #{eqDegree,jdbcType=VARCHAR},
+      IQ_degree = #{iqDegree,jdbcType=VARCHAR},
+      multi_quality_degree = #{multiQualityDegree,jdbcType=VARCHAR},
+      register = #{register,jdbcType=VARCHAR},
+      checker = #{checker,jdbcType=VARCHAR},
+      registe_time = #{registeTime,jdbcType=TIMESTAMP},
+      check_time = #{checkTime,jdbcType=TIMESTAMP},
+      resume_id = #{resumeId,jdbcType=SMALLINT},
+      result = #{result,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=SMALLINT}
+    where ein_id = #{einId,jdbcType=SMALLINT}
+  </update>
+</mapper>

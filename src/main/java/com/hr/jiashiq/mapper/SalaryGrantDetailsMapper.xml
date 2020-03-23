@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.SalaryGrantDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.SalaryGrantDetails">
+    <id column="grd_id" jdbcType="SMALLINT" property="grdId" />
+    <result column="salary_grant_id" jdbcType="VARCHAR" property="salaryGrantId" />
+    <result column="human_id" jdbcType="VARCHAR" property="humanId" />
+    <result column="bouns_sum" jdbcType="DECIMAL" property="bounsSum" />
+    <result column="sale_sum" jdbcType="DECIMAL" property="saleSum" />
+    <result column="deduct_sum" jdbcType="DECIMAL" property="deductSum" />
+    <result column="salary_standard_sum" jdbcType="DECIMAL" property="salaryStandardSum" />
+    <result column="salary_paid_sum" jdbcType="DECIMAL" property="salaryPaidSum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    grd_id, salary_grant_id, human_id, bouns_sum, sale_sum, deduct_sum, salary_standard_sum, 
+    salary_paid_sum
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.SalaryGrantDetailsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from salary_grant_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from salary_grant_details
+    where grd_id = #{grdId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from salary_grant_details
+    where grd_id = #{grdId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.SalaryGrantDetailsExample">
+    delete from salary_grant_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.SalaryGrantDetails">
+    insert into salary_grant_details (grd_id, salary_grant_id, human_id, 
+      bouns_sum, sale_sum, deduct_sum, 
+      salary_standard_sum, salary_paid_sum)
+    values (#{grdId,jdbcType=SMALLINT}, #{salaryGrantId,jdbcType=VARCHAR}, #{humanId,jdbcType=VARCHAR}, 
+      #{bounsSum,jdbcType=DECIMAL}, #{saleSum,jdbcType=DECIMAL}, #{deductSum,jdbcType=DECIMAL}, 
+      #{salaryStandardSum,jdbcType=DECIMAL}, #{salaryPaidSum,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.SalaryGrantDetails">
+    insert into salary_grant_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grdId != null">
+        grd_id,
+      </if>
+      <if test="salaryGrantId != null">
+        salary_grant_id,
+      </if>
+      <if test="humanId != null">
+        human_id,
+      </if>
+      <if test="bounsSum != null">
+        bouns_sum,
+      </if>
+      <if test="saleSum != null">
+        sale_sum,
+      </if>
+      <if test="deductSum != null">
+        deduct_sum,
+      </if>
+      <if test="salaryStandardSum != null">
+        salary_standard_sum,
+      </if>
+      <if test="salaryPaidSum != null">
+        salary_paid_sum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grdId != null">
+        #{grdId,jdbcType=SMALLINT},
+      </if>
+      <if test="salaryGrantId != null">
+        #{salaryGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="humanId != null">
+        #{humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="bounsSum != null">
+        #{bounsSum,jdbcType=DECIMAL},
+      </if>
+      <if test="saleSum != null">
+        #{saleSum,jdbcType=DECIMAL},
+      </if>
+      <if test="deductSum != null">
+        #{deductSum,jdbcType=DECIMAL},
+      </if>
+      <if test="salaryStandardSum != null">
+        #{salaryStandardSum,jdbcType=DECIMAL},
+      </if>
+      <if test="salaryPaidSum != null">
+        #{salaryPaidSum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.SalaryGrantDetailsExample" resultType="java.lang.Long">
+    select count(*) from salary_grant_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update salary_grant_details
+    <set>
+      <if test="record.grdId != null">
+        grd_id = #{record.grdId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.salaryGrantId != null">
+        salary_grant_id = #{record.salaryGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanId != null">
+        human_id = #{record.humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bounsSum != null">
+        bouns_sum = #{record.bounsSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.saleSum != null">
+        sale_sum = #{record.saleSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deductSum != null">
+        deduct_sum = #{record.deductSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salaryStandardSum != null">
+        salary_standard_sum = #{record.salaryStandardSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salaryPaidSum != null">
+        salary_paid_sum = #{record.salaryPaidSum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update salary_grant_details
+    set grd_id = #{record.grdId,jdbcType=SMALLINT},
+      salary_grant_id = #{record.salaryGrantId,jdbcType=VARCHAR},
+      human_id = #{record.humanId,jdbcType=VARCHAR},
+      bouns_sum = #{record.bounsSum,jdbcType=DECIMAL},
+      sale_sum = #{record.saleSum,jdbcType=DECIMAL},
+      deduct_sum = #{record.deductSum,jdbcType=DECIMAL},
+      salary_standard_sum = #{record.salaryStandardSum,jdbcType=DECIMAL},
+      salary_paid_sum = #{record.salaryPaidSum,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.SalaryGrantDetails">
+    update salary_grant_details
+    <set>
+      <if test="salaryGrantId != null">
+        salary_grant_id = #{salaryGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="humanId != null">
+        human_id = #{humanId,jdbcType=VARCHAR},
+      </if>
+      <if test="bounsSum != null">
+        bouns_sum = #{bounsSum,jdbcType=DECIMAL},
+      </if>
+      <if test="saleSum != null">
+        sale_sum = #{saleSum,jdbcType=DECIMAL},
+      </if>
+      <if test="deductSum != null">
+        deduct_sum = #{deductSum,jdbcType=DECIMAL},
+      </if>
+      <if test="salaryStandardSum != null">
+        salary_standard_sum = #{salaryStandardSum,jdbcType=DECIMAL},
+      </if>
+      <if test="salaryPaidSum != null">
+        salary_paid_sum = #{salaryPaidSum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where grd_id = #{grdId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.SalaryGrantDetails">
+    update salary_grant_details
+    set salary_grant_id = #{salaryGrantId,jdbcType=VARCHAR},
+      human_id = #{humanId,jdbcType=VARCHAR},
+      bouns_sum = #{bounsSum,jdbcType=DECIMAL},
+      sale_sum = #{saleSum,jdbcType=DECIMAL},
+      deduct_sum = #{deductSum,jdbcType=DECIMAL},
+      salary_standard_sum = #{salaryStandardSum,jdbcType=DECIMAL},
+      salary_paid_sum = #{salaryPaidSum,jdbcType=DECIMAL}
+    where grd_id = #{grdId,jdbcType=SMALLINT}
+  </update>
+</mapper>

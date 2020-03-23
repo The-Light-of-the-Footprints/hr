@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.ConfigPrimaryKeyMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.ConfigPrimaryKey">
+    <id column="prk_id" jdbcType="SMALLINT" property="prkId" />
+    <result column="primary_key_table" jdbcType="VARCHAR" property="primaryKeyTable" />
+    <result column="primary_key" jdbcType="VARCHAR" property="primaryKey" />
+    <result column="key_name" jdbcType="VARCHAR" property="keyName" />
+    <result column="primary_key_status" jdbcType="TINYINT" property="primaryKeyStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    prk_id, primary_key_table, primary_key, key_name, primary_key_status
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.ConfigPrimaryKeyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config_primary_key
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from config_primary_key
+    where prk_id = #{prkId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from config_primary_key
+    where prk_id = #{prkId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.ConfigPrimaryKeyExample">
+    delete from config_primary_key
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.ConfigPrimaryKey">
+    insert into config_primary_key (prk_id, primary_key_table, primary_key, 
+      key_name, primary_key_status)
+    values (#{prkId,jdbcType=SMALLINT}, #{primaryKeyTable,jdbcType=VARCHAR}, #{primaryKey,jdbcType=VARCHAR}, 
+      #{keyName,jdbcType=VARCHAR}, #{primaryKeyStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.ConfigPrimaryKey">
+    insert into config_primary_key
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prkId != null">
+        prk_id,
+      </if>
+      <if test="primaryKeyTable != null">
+        primary_key_table,
+      </if>
+      <if test="primaryKey != null">
+        primary_key,
+      </if>
+      <if test="keyName != null">
+        key_name,
+      </if>
+      <if test="primaryKeyStatus != null">
+        primary_key_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prkId != null">
+        #{prkId,jdbcType=SMALLINT},
+      </if>
+      <if test="primaryKeyTable != null">
+        #{primaryKeyTable,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryKey != null">
+        #{primaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryKeyStatus != null">
+        #{primaryKeyStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.ConfigPrimaryKeyExample" resultType="java.lang.Long">
+    select count(*) from config_primary_key
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config_primary_key
+    <set>
+      <if test="record.prkId != null">
+        prk_id = #{record.prkId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.primaryKeyTable != null">
+        primary_key_table = #{record.primaryKeyTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.primaryKey != null">
+        primary_key = #{record.primaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keyName != null">
+        key_name = #{record.keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.primaryKeyStatus != null">
+        primary_key_status = #{record.primaryKeyStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config_primary_key
+    set prk_id = #{record.prkId,jdbcType=SMALLINT},
+      primary_key_table = #{record.primaryKeyTable,jdbcType=VARCHAR},
+      primary_key = #{record.primaryKey,jdbcType=VARCHAR},
+      key_name = #{record.keyName,jdbcType=VARCHAR},
+      primary_key_status = #{record.primaryKeyStatus,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.ConfigPrimaryKey">
+    update config_primary_key
+    <set>
+      <if test="primaryKeyTable != null">
+        primary_key_table = #{primaryKeyTable,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryKey != null">
+        primary_key = #{primaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="keyName != null">
+        key_name = #{keyName,jdbcType=VARCHAR},
+      </if>
+      <if test="primaryKeyStatus != null">
+        primary_key_status = #{primaryKeyStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where prk_id = #{prkId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.ConfigPrimaryKey">
+    update config_primary_key
+    set primary_key_table = #{primaryKeyTable,jdbcType=VARCHAR},
+      primary_key = #{primaryKey,jdbcType=VARCHAR},
+      key_name = #{keyName,jdbcType=VARCHAR},
+      primary_key_status = #{primaryKeyStatus,jdbcType=TINYINT}
+    where prk_id = #{prkId,jdbcType=SMALLINT}
+  </update>
+</mapper>
