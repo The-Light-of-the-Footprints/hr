@@ -1,0 +1,66 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="DB2Tables" targetRuntime="MyBatis3" >
+		<commentGenerator>
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+		<jdbcConnection 
+			driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/test?useSSL=false" 
+			userId="root"
+			password="root">
+		</jdbcConnection>
+		
+		<javaModelGenerator 
+			targetPackage="com.hr.entity"
+			targetProject="src/main/java" >
+			<property name="enableSubPackages" value="true"/>
+			<property name="trimStrings" value="true"/>
+		</javaModelGenerator>
+		
+		<sqlMapGenerator 
+			targetPackage="com.hr.jiashiq.mapper"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true"/>
+		</sqlMapGenerator>
+		
+		<javaClientGenerator type="XMLMAPPER" 
+			targetPackage="com.hr.jiashiq.mapper" 
+			targetProject="src/main/java" >
+			<property name="enableSubPackages" value="true"/>
+		</javaClientGenerator>
+		
+		<table tableName="bonus" domainObjectName="Bonus"/>
+		<table tableName="config_file_first_kind" domainObjectName="ConfigFileFirstKind"></table>
+		<table tableName="config_file_second_kind" domainObjectName="ConfigFileSecondKind"/>
+		<table tableName="config_file_third_kind" domainObjectName="ConfigFileThirdKind"></table>
+		<table tableName="config_major" domainObjectName="ConfigMajor"/>
+		<table tableName="config_major_kind" domainObjectName="ConfigMajorKind"></table>
+		<table tableName="config_primary_key" domainObjectName="ConfigPrimaryKey"/>
+		<table tableName="config_public_char" domainObjectName="ConfigPublicChar"></table>
+		<table tableName="config_question_first_kind" domainObjectName="ConfigQuestionFirstKind"/>
+		<table tableName="config_question_second_kind" domainObjectName="ConfigQuestionSecondKind"></table>
+		<table tableName="engage_answer" domainObjectName="EngageAnswer"/>
+		<table tableName="engage_answer_details" domainObjectName="EngageAnswerDetails"></table>
+		<table tableName="engage_exam" domainObjectName="EngageExam"/>
+		<table tableName="engage_exam_details" domainObjectName="EngageExamDetails"></table>
+		<table tableName="engage_interview" domainObjectName="EngageInterview"/>
+		<table tableName="engage_major_release" domainObjectName="EngageMajorRelease"></table>
+		<table tableName="engage_resume" domainObjectName="EngageResume"></table>
+		<table tableName="engage_subjects" domainObjectName="EngageSubjects"/>
+		<table tableName="human_file" domainObjectName="HumanFile"></table>
+		<table tableName="human_file_dig" domainObjectName="HumanFileDig"/>
+		<table tableName="major_change" domainObjectName="MajorChange"></table>
+		<table tableName="salary_grant" domainObjectName="SalaryGrant"></table>
+		<table tableName="salary_grant_details" domainObjectName="SalaryGrantDetails"/>
+		<table tableName="salary_standard" domainObjectName="SalaryStandard"></table>
+		<table tableName="salary_standard_details" domainObjectName="SalaryStandardDetails"/>
+		<table tableName="training" domainObjectName="Training"></table>
+		<table tableName="users" domainObjectName="Users"></table>
+		<table tableName="sys_right" domainObjectName="SysRight"/>
+		<table tableName="sys_right_role" domainObjectName="SysRightRole"></table>
+		<table tableName="sys_role" domainObjectName="SysRole"></table>
+	</context>
+</generatorConfiguration>

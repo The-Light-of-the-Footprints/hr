@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hr.jiashiq.mapper.EngageAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.hr.entity.EngageAnswer">
+    <id column="ans_id" jdbcType="SMALLINT" property="ansId" />
+    <result column="exam_number" jdbcType="VARCHAR" property="examNumber" />
+    <result column="resume_id" jdbcType="SMALLINT" property="resumeId" />
+    <result column="human_name" jdbcType="VARCHAR" property="humanName" />
+    <result column="human_idcard" jdbcType="VARCHAR" property="humanIdcard" />
+    <result column="major_id" jdbcType="SMALLINT" property="majorId" />
+    <result column="test_time" jdbcType="TIMESTAMP" property="testTime" />
+    <result column="use_time" jdbcType="INTEGER" property="useTime" />
+    <result column="total_point" jdbcType="DECIMAL" property="totalPoint" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ans_id, exam_number, resume_id, human_name, human_idcard, major_id, test_time, use_time, 
+    total_point
+  </sql>
+  <select id="selectByExample" parameterType="com.hr.entity.EngageAnswerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from engage_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from engage_answer
+    where ans_id = #{ansId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from engage_answer
+    where ans_id = #{ansId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hr.entity.EngageAnswerExample">
+    delete from engage_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hr.entity.EngageAnswer">
+    insert into engage_answer (ans_id, exam_number, resume_id, 
+      human_name, human_idcard, major_id, 
+      test_time, use_time, total_point
+      )
+    values (#{ansId,jdbcType=SMALLINT}, #{examNumber,jdbcType=VARCHAR}, #{resumeId,jdbcType=SMALLINT}, 
+      #{humanName,jdbcType=VARCHAR}, #{humanIdcard,jdbcType=VARCHAR}, #{majorId,jdbcType=SMALLINT}, 
+      #{testTime,jdbcType=TIMESTAMP}, #{useTime,jdbcType=INTEGER}, #{totalPoint,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hr.entity.EngageAnswer">
+    insert into engage_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ansId != null">
+        ans_id,
+      </if>
+      <if test="examNumber != null">
+        exam_number,
+      </if>
+      <if test="resumeId != null">
+        resume_id,
+      </if>
+      <if test="humanName != null">
+        human_name,
+      </if>
+      <if test="humanIdcard != null">
+        human_idcard,
+      </if>
+      <if test="majorId != null">
+        major_id,
+      </if>
+      <if test="testTime != null">
+        test_time,
+      </if>
+      <if test="useTime != null">
+        use_time,
+      </if>
+      <if test="totalPoint != null">
+        total_point,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ansId != null">
+        #{ansId,jdbcType=SMALLINT},
+      </if>
+      <if test="examNumber != null">
+        #{examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null">
+        #{resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="humanName != null">
+        #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanIdcard != null">
+        #{humanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null">
+        #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="testTime != null">
+        #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useTime != null">
+        #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalPoint != null">
+        #{totalPoint,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hr.entity.EngageAnswerExample" resultType="java.lang.Long">
+    select count(*) from engage_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update engage_answer
+    <set>
+      <if test="record.ansId != null">
+        ans_id = #{record.ansId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.examNumber != null">
+        exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeId != null">
+        resume_id = #{record.resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.humanName != null">
+        human_name = #{record.humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.humanIdcard != null">
+        human_idcard = #{record.humanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorId != null">
+        major_id = #{record.majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.testTime != null">
+        test_time = #{record.testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.useTime != null">
+        use_time = #{record.useTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalPoint != null">
+        total_point = #{record.totalPoint,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update engage_answer
+    set ans_id = #{record.ansId,jdbcType=SMALLINT},
+      exam_number = #{record.examNumber,jdbcType=VARCHAR},
+      resume_id = #{record.resumeId,jdbcType=SMALLINT},
+      human_name = #{record.humanName,jdbcType=VARCHAR},
+      human_idcard = #{record.humanIdcard,jdbcType=VARCHAR},
+      major_id = #{record.majorId,jdbcType=SMALLINT},
+      test_time = #{record.testTime,jdbcType=TIMESTAMP},
+      use_time = #{record.useTime,jdbcType=INTEGER},
+      total_point = #{record.totalPoint,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.EngageAnswer">
+    update engage_answer
+    <set>
+      <if test="examNumber != null">
+        exam_number = #{examNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null">
+        resume_id = #{resumeId,jdbcType=SMALLINT},
+      </if>
+      <if test="humanName != null">
+        human_name = #{humanName,jdbcType=VARCHAR},
+      </if>
+      <if test="humanIdcard != null">
+        human_idcard = #{humanIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="majorId != null">
+        major_id = #{majorId,jdbcType=SMALLINT},
+      </if>
+      <if test="testTime != null">
+        test_time = #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useTime != null">
+        use_time = #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalPoint != null">
+        total_point = #{totalPoint,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ans_id = #{ansId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hr.entity.EngageAnswer">
+    update engage_answer
+    set exam_number = #{examNumber,jdbcType=VARCHAR},
+      resume_id = #{resumeId,jdbcType=SMALLINT},
+      human_name = #{humanName,jdbcType=VARCHAR},
+      human_idcard = #{humanIdcard,jdbcType=VARCHAR},
+      major_id = #{majorId,jdbcType=SMALLINT},
+      test_time = #{testTime,jdbcType=TIMESTAMP},
+      use_time = #{useTime,jdbcType=INTEGER},
+      total_point = #{totalPoint,jdbcType=DECIMAL}
+    where ans_id = #{ansId,jdbcType=SMALLINT}
+  </update>
+</mapper>
