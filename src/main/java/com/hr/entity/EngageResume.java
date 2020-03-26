@@ -3,6 +3,10 @@ package com.hr.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class EngageResume {
     private Short resId;
 
@@ -37,7 +41,8 @@ public class EngageResume {
     private String humanNationality;
 
     private String humanRace;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date humanBirthday;
 
     private Short humanAge;
@@ -63,11 +68,13 @@ public class EngageResume {
     private Short checkStatus;
 
     private String register;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registTime;
 
     private String checker;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkTime;
 
     private Short interviewStatus;
@@ -79,15 +86,18 @@ public class EngageResume {
     private Short testAmount;
 
     private String testChecker;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date testCheckTime;
 
     private String passRegister;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date passRegistTime;
 
     private String passChecker;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date passCheckTime;
 
     private Short passCheckStatus;
@@ -463,4 +473,28 @@ public class EngageResume {
     public void setPassPasscomment(String passPasscomment) {
         this.passPasscomment = passPasscomment == null ? null : passPasscomment.trim();
     }
+
+	@Override
+	public String toString() {
+		return "EngageResume [resId=" + resId + ", humanName=" + humanName + ", engageType=" + engageType
+				+ ", humanAddress=" + humanAddress + ", humanPostcode=" + humanPostcode + ", humanMajorId="
+				+ humanMajorId + ", humanTelephone=" + humanTelephone + ", humanHomephone=" + humanHomephone
+				+ ", humanMobilephone=" + humanMobilephone + ", humanEmail=" + humanEmail + ", humanHobby=" + humanHobby
+				+ ", humanSpecility=" + humanSpecility + ", humanSex=" + humanSex + ", humanReligion=" + humanReligion
+				+ ", humanParty=" + humanParty + ", humanNationality=" + humanNationality + ", humanRace=" + humanRace
+				+ ", humanBirthday=" + humanBirthday + ", humanAge=" + humanAge + ", humanEducatedDegree="
+				+ humanEducatedDegree + ", humanEducatedYears=" + humanEducatedYears + ", humanEducatedMajor="
+				+ humanEducatedMajor + ", humanCollege=" + humanCollege + ", humanIdcard=" + humanIdcard
+				+ ", humanBirthplace=" + humanBirthplace + ", demandSalaryStandard=" + demandSalaryStandard
+				+ ", humanPicture=" + humanPicture + ", attachmentName=" + attachmentName + ", checkStatus="
+				+ checkStatus + ", register=" + register + ", registTime=" + registTime + ", checker=" + checker
+				+ ", checkTime=" + checkTime + ", interviewStatus=" + interviewStatus + ", interviewAmount="
+				+ interviewAmount + ", totalPoints=" + totalPoints + ", testAmount=" + testAmount + ", testChecker="
+				+ testChecker + ", testCheckTime=" + testCheckTime + ", passRegister=" + passRegister
+				+ ", passRegistTime=" + passRegistTime + ", passChecker=" + passChecker + ", passCheckTime="
+				+ passCheckTime + ", passCheckStatus=" + passCheckStatus + ", passCheckcomment=" + passCheckcomment
+				+ ", passPasscomment=" + passPasscomment + "]";
+	}
+    
+    
 }

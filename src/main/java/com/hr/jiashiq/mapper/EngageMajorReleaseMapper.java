@@ -20,6 +20,8 @@ public interface EngageMajorReleaseMapper {
     List<EngageMajorReleaseWithBLOBs> selectByExampleWithBLOBs(EngageMajorReleaseExample example);
 
     List<EngageMajorRelease> selectByExample(EngageMajorReleaseExample example);
+    
+    List<EngageMajorRelease> queryByFen(@Param("page")Integer page,@Param("rows")Integer rows);
 
     EngageMajorReleaseWithBLOBs selectByPrimaryKey(Short mreId);
 

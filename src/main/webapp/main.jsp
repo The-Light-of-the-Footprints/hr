@@ -13,9 +13,6 @@
 	<link rel="stylesheet" href="<%=request.getContextPath() %>/easyui/themes/default/easyui.css" />
 </head>
 <body class="easyui-layout">
-		<div data-options="region:'north',title:'欢迎'" style="height:150px;">
-			
-		</div>
 		<div data-options="region:'west',title:'菜单'" style="width:200px;">
 			<ul id="tt"></ul>  
 			<script type="text/javascript">
@@ -59,7 +56,15 @@
 		<div data-options="region:'center'">
 			<div id="tt2" class="easyui-tabs" style="width:100%;height:100%;">
 				<div title="首页" style="padding:20px;display:none;">
-					欢迎
+					<script type="text/javascript">
+						$(function () {	
+							$.messager.show({
+								title:'欢迎您：',							
+								msg:'<font style="font-family:宋体;"><%=request.getSession().getAttribute("utruename")%>(<%=request.getSession().getAttribute("utype")%>)</font>',
+								timeout:2000
+							});
+						})
+					</script>
 				</div>
 			</div>
 		</div>

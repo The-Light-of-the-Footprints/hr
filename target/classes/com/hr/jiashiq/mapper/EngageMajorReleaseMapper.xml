@@ -98,6 +98,13 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  
+  <select id="queryByFen" resultMap="BaseResultMap">
+  	<bind name="pp" value="(page-1)*rows"/>
+    select <include refid="Base_Column_List" /> from engage_major_release order by mre_id desc limit #{pp},#{rows};
+  </select>
+  
   <select id="selectByExample" parameterType="com.hr.entity.EngageMajorReleaseExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

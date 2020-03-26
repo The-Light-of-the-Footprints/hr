@@ -141,6 +141,43 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+   <select id="queryByWhere" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from engage_resume 
+    <where>
+    	<if test="example.humanMajorId!=null and example.humanMajorId!=0">
+    		human_major_id = #{example.humanMajorId}
+    	</if>
+    	<if test="example.humanName!=null">
+    		and human_name like '%${example.humanName}%'
+    	</if>
+    	<if test="example.registTime!=null">
+    		and regist_time BETWEEN #{example.registTime} AND #{example.checkTime}
+    	</if>
+    	and check_status=0
+    </where>
+    <bind name="pp" value="(page-1)*rows"/>
+    order by res_id desc limit #{pp},#{rows};
+  </select>
+  
+  <select id="queryByWhere2" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from engage_resume 
+    <where>
+    	<if test="example.humanMajorId!=null and example.humanMajorId!=0">
+    		human_major_id = #{example.humanMajorId}
+    	</if>
+    	<if test="example.humanName!=null">
+    		and human_name like '%${example.humanName}%'
+    	</if>
+    	<if test="example.registTime!=null">
+    		and regist_time BETWEEN #{example.registTime} AND #{example.checkTime}
+    	</if>
+    	and check_status=2
+    </where>
+    <bind name="pp" value="(page-1)*rows"/>
+    order by res_id desc limit #{pp},#{rows};
+  </select>
+  
   <select id="selectByExample" parameterType="com.hr.entity.EngageResumeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

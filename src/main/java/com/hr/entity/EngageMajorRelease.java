@@ -2,6 +2,11 @@ package com.hr.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 public class EngageMajorRelease {
     private Short mreId;
 
@@ -12,15 +17,18 @@ public class EngageMajorRelease {
     private Short humanAmount;
 
     private String engageType;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date deadline;
 
     private String register;
-
+    
     private String changer;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registTime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date changeTime;
 
     public Short getMreId() {
@@ -102,4 +110,14 @@ public class EngageMajorRelease {
     public void setChangeTime(Date changeTime) {
         this.changeTime = changeTime;
     }
+
+	@Override
+	public String toString() {
+		return "EngageMajorRelease [mreId=" + mreId + ", thirdKindId=" + thirdKindId + ", majorId=" + majorId
+				+ ", humanAmount=" + humanAmount + ", engageType=" + engageType + ", deadline=" + deadline
+				+ ", register=" + register + ", changer=" + changer + ", registTime=" + registTime + ", changeTime="
+				+ changeTime + "]";
+	}
+    
+    
 }

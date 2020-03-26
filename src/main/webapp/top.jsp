@@ -22,9 +22,11 @@
 	</style>
 	<script type="text/javascript">
 		function del() {
-			$.post("user/deletsession",function(data){
-				location.href="login.jsp"
-			},"json")
+			if(confirm("确定退出？")){
+				$.post("user/deletesession",function(data){
+					window.parent.location.href="http://127.0.0.1:8080/hr/login.jsp";
+				},"json")
+			}
 		}
 	</script>
 	</head>

@@ -30,6 +30,7 @@ public class SysRightController {
 		}
 		List<SysRight> userList=((Users)session.getAttribute("user")).getRole().getRights();
 		List<SysRight> list = MyUtil.getRightByParentId(userList, id);
+		System.out.println(userList.toString());
 		System.out.println(list.toString());
 		List<Map<String, Object>> meunList = new ArrayList<Map<String, Object>>();
 		for (SysRight sysRight : list) {

@@ -18,7 +18,11 @@ public interface EngageResumeMapper {
     int insertSelective(EngageResumeWithBLOBs record);
 
     List<EngageResumeWithBLOBs> selectByExampleWithBLOBs(EngageResumeExample example);
-
+    
+    List<EngageResume> queryByWhere(@Param("example")EngageResume example,@Param("page")Integer page,@Param("rows")Integer rows);
+    
+    List<EngageResume> queryByWhere2(@Param("example")EngageResume example,@Param("page")Integer page,@Param("rows")Integer rows);
+    
     List<EngageResume> selectByExample(EngageResumeExample example);
 
     EngageResumeWithBLOBs selectByPrimaryKey(Short resId);
