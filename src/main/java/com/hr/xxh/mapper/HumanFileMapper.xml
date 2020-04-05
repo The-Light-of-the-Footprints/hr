@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hr.jiashiq.mapper.HumanFileMapper">
+<mapper namespace="com.hr.xxh.mapper.HumanFileMapper">
   <resultMap id="BaseResultMap" type="com.hr.entity.HumanFile">
     <id column="human_id" jdbcType="VARCHAR" property="humanId" />
     <result column="first_kind_id" jdbcType="INTEGER" property="firstKindId" />
@@ -11,6 +11,7 @@
     <result column="human_postcode" jdbcType="VARCHAR" property="humanPostcode" />
     <result column="human_pro_designation" jdbcType="VARCHAR" property="humanProDesignation" />
     <result column="human_major_id" jdbcType="INTEGER" property="humanMajorId" />
+    <result column="human_major_kind_id" jdbcType="INTEGER" property="humanMajorKindId" />
     <result column="human_telephone" jdbcType="VARCHAR" property="humanTelephone" />
     <result column="human_mobilephone" jdbcType="CHAR" property="humanMobilephone" />
     <result column="human_bank" jdbcType="VARCHAR" property="humanBank" />
@@ -58,68 +59,41 @@
     <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
     <result column="human_histroy_records" jdbcType="LONGVARCHAR" property="humanHistroyRecords" />
     <result column="human_family_membership" jdbcType="LONGVARCHAR" property="humanFamilyMembership" />
+    <association property="firstKind" javaType="com.hr.entity.ConfigFileFirstKind">
+            <id property="firstKindId" column="first_kind_id"/>
+            <result property="firstKindName" column="first_kind_name"/>
+            <result property="firstKindSalaryId" column="first_kind_salary_id"/>
+            <result property="firstKindSaleId" column="first_kind_sale_id"/>
+    </association>
+    <association property="secondKind" javaType="com.hr.entity.ConfigFileSecondKind">
+            <id property="secondKindId" column="second_kind_id"/>
+            <result property="secondKindName" column="second_kind_name"/>
+            <result property="firstKindId" column="first_kind_id"/>
+            <result property="secondSalaryId" column="second_salary_id"/>
+            <result property="secondSaleId" column="second_sale_id"/>
+    </association>
+    <association property="thirdKind" javaType="com.hr.entity.ConfigFileThirdKind">
+            <id property="thirdKindId" column="third_kind_id"/>
+            <result property="thirdKindName" column="third_kind_name"/>
+            <result property="firstKindId" column="first_kind_id"/>
+            <result property="secondKindId" column="second_kind_id"/>
+            <result property="thirdKindSaleId" column="third_kind_sale_id"/>
+            <result property="thirdKindIsRetail" column="third_kind_is_retail"/>
+    </association>
+        <association property="major" javaType="com.hr.entity.ConfigMajor">
+            <id property="majorId" column="major_id"/>
+            <result property="majorName" column="major_name"/>
+            <result property="majorKindId" column="major_kind_id"/>
+            <result property="testAmount" column="test_amount"/>
+    </association>
+        <association property="majorKind" javaType="com.hr.entity.ConfigMajorKind">
+            <id property="majorKindId" column="major_kind_id"/>
+            <result property="majorKindName" column="major_kind_name"/>
+    </association>
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List">
-    human_id, first_kind_id, second_kind_id, third_kind_id, human_name, human_address, 
-    human_postcode, human_pro_designation, human_major_id, human_telephone, human_mobilephone, 
+    human_id, human_file.first_kind_id, human_file.second_kind_id, human_file.third_kind_id, human_name, human_address, 
+    human_postcode, human_pro_designation, human_major_id, human_major_kind_id, human_telephone, human_mobilephone, 
     human_bank, human_account, human_qq, human_email, human_hobby, human_speciality, 
     human_sex, human_religion, human_party, human_nationality, human_race, human_birthday, 
     human_birthplace, human_age, human_educated_degree, human_educated_years, human_educated_major, 
@@ -131,36 +105,6 @@
   <sql id="Blob_Column_List">
     remark, human_histroy_records, human_family_membership
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.hr.entity.HumanFileExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from human_file
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" parameterType="com.hr.entity.HumanFileExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from human_file
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -173,16 +117,10 @@
     delete from human_file
     where human_id = #{humanId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hr.entity.HumanFileExample">
-    delete from human_file
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
   <insert id="insert" parameterType="com.hr.entity.HumanFileWithBLOBs">
     insert into human_file (human_id, first_kind_id, second_kind_id, 
       third_kind_id, human_name, human_address, 
-      human_postcode, human_pro_designation, human_major_id, 
+      human_postcode, human_pro_designation, human_major_id, human_major_kind_id, 
       human_telephone, human_mobilephone, human_bank, 
       human_account, human_qq, human_email, 
       human_hobby, human_speciality, human_sex, 
@@ -201,7 +139,7 @@
       human_family_membership)
     values (#{humanId,jdbcType=VARCHAR}, #{firstKindId,jdbcType=INTEGER}, #{secondKindId,jdbcType=INTEGER}, 
       #{thirdKindId,jdbcType=INTEGER}, #{humanName,jdbcType=VARCHAR}, #{humanAddress,jdbcType=VARCHAR}, 
-      #{humanPostcode,jdbcType=VARCHAR}, #{humanProDesignation,jdbcType=VARCHAR}, #{humanMajorId,jdbcType=INTEGER}, 
+      #{humanPostcode,jdbcType=VARCHAR}, #{humanProDesignation,jdbcType=VARCHAR}, #{humanMajorId,jdbcType=INTEGER}, #{humanMajorKindId,jdbcType=INTEGER}, 
       #{humanTelephone,jdbcType=VARCHAR}, #{humanMobilephone,jdbcType=CHAR}, #{humanBank,jdbcType=VARCHAR}, 
       #{humanAccount,jdbcType=VARCHAR}, #{humanQq,jdbcType=VARCHAR}, #{humanEmail,jdbcType=VARCHAR}, 
       #{humanHobby,jdbcType=VARCHAR}, #{humanSpeciality,jdbcType=VARCHAR}, #{humanSex,jdbcType=CHAR}, 
@@ -248,6 +186,9 @@
       </if>
       <if test="humanMajorId != null">
         human_major_id,
+      </if>
+      <if test="humanMajorKindId != null">
+        human_major_kind_id,
       </if>
       <if test="humanTelephone != null">
         human_telephone,
@@ -550,299 +491,6 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hr.entity.HumanFileExample" resultType="java.lang.Long">
-    select count(*) from human_file
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update human_file
-    <set>
-      <if test="record.humanId != null">
-        human_id = #{record.humanId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.firstKindId != null">
-        first_kind_id = #{record.firstKindId,jdbcType=INTEGER},
-      </if>
-      <if test="record.secondKindId != null">
-        second_kind_id = #{record.secondKindId,jdbcType=INTEGER},
-      </if>
-      <if test="record.thirdKindId != null">
-        third_kind_id = #{record.thirdKindId,jdbcType=INTEGER},
-      </if>
-      <if test="record.humanName != null">
-        human_name = #{record.humanName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanAddress != null">
-        human_address = #{record.humanAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanPostcode != null">
-        human_postcode = #{record.humanPostcode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanProDesignation != null">
-        human_pro_designation = #{record.humanProDesignation,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanMajorId != null">
-        human_major_id = #{record.humanMajorId,jdbcType=INTEGER},
-      </if>
-      <if test="record.humanTelephone != null">
-        human_telephone = #{record.humanTelephone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanMobilephone != null">
-        human_mobilephone = #{record.humanMobilephone,jdbcType=CHAR},
-      </if>
-      <if test="record.humanBank != null">
-        human_bank = #{record.humanBank,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanAccount != null">
-        human_account = #{record.humanAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanQq != null">
-        human_qq = #{record.humanQq,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanEmail != null">
-        human_email = #{record.humanEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanHobby != null">
-        human_hobby = #{record.humanHobby,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanSpeciality != null">
-        human_speciality = #{record.humanSpeciality,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanSex != null">
-        human_sex = #{record.humanSex,jdbcType=CHAR},
-      </if>
-      <if test="record.humanReligion != null">
-        human_religion = #{record.humanReligion,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanParty != null">
-        human_party = #{record.humanParty,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanNationality != null">
-        human_nationality = #{record.humanNationality,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanRace != null">
-        human_race = #{record.humanRace,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanBirthday != null">
-        human_birthday = #{record.humanBirthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.humanBirthplace != null">
-        human_birthplace = #{record.humanBirthplace,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanAge != null">
-        human_age = #{record.humanAge,jdbcType=INTEGER},
-      </if>
-      <if test="record.humanEducatedDegree != null">
-        human_educated_degree = #{record.humanEducatedDegree,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanEducatedYears != null">
-        human_educated_years = #{record.humanEducatedYears,jdbcType=INTEGER},
-      </if>
-      <if test="record.humanEducatedMajor != null">
-        human_educated_major = #{record.humanEducatedMajor,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanSocietySecurityId != null">
-        human_society_security_id = #{record.humanSocietySecurityId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.humanIdCard != null">
-        human_id_card = #{record.humanIdCard,jdbcType=VARCHAR},
-      </if>
-      <if test="record.salaryStandardId != null">
-        salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.salarySum != null">
-        salary_sum = #{record.salarySum,jdbcType=DECIMAL},
-      </if>
-      <if test="record.demandSalaraySum != null">
-        demand_salaray_sum = #{record.demandSalaraySum,jdbcType=DECIMAL},
-      </if>
-      <if test="record.paidSalarySum != null">
-        paid_salary_sum = #{record.paidSalarySum,jdbcType=DECIMAL},
-      </if>
-      <if test="record.majorChangeAmount != null">
-        major_change_amount = #{record.majorChangeAmount,jdbcType=INTEGER},
-      </if>
-      <if test="record.bonusAmount != null">
-        bonus_amount = #{record.bonusAmount,jdbcType=INTEGER},
-      </if>
-      <if test="record.trainingAmount != null">
-        training_amount = #{record.trainingAmount,jdbcType=INTEGER},
-      </if>
-      <if test="record.fileChangAmount != null">
-        file_chang_amount = #{record.fileChangAmount,jdbcType=INTEGER},
-      </if>
-      <if test="record.humanPicture != null">
-        human_picture = #{record.humanPicture,jdbcType=VARCHAR},
-      </if>
-      <if test="record.attachmentName != null">
-        attachment_name = #{record.attachmentName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.checkStatus != null">
-        check_status = #{record.checkStatus,jdbcType=INTEGER},
-      </if>
-      <if test="record.register != null">
-        register = #{record.register,jdbcType=VARCHAR},
-      </if>
-      <if test="record.checker != null">
-        checker = #{record.checker,jdbcType=VARCHAR},
-      </if>
-      <if test="record.changer != null">
-        changer = #{record.changer,jdbcType=VARCHAR},
-      </if>
-      <if test="record.registTime != null">
-        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.checkTime != null">
-        check_time = #{record.checkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.changeTime != null">
-        change_time = #{record.changeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.lastlyChangeTime != null">
-        lastly_change_time = #{record.lastlyChangeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.deleteTime != null">
-        delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.recoveryTime != null">
-        recovery_time = #{record.recoveryTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.humanFileStatus != null">
-        human_file_status = #{record.humanFileStatus,jdbcType=INTEGER},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.humanHistroyRecords != null">
-        human_histroy_records = #{record.humanHistroyRecords,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.humanFamilyMembership != null">
-        human_family_membership = #{record.humanFamilyMembership,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update human_file
-    set human_id = #{record.humanId,jdbcType=VARCHAR},
-      first_kind_id = #{record.firstKindId,jdbcType=INTEGER},
-      second_kind_id = #{record.secondKindId,jdbcType=INTEGER},
-      third_kind_id = #{record.thirdKindId,jdbcType=INTEGER},
-      human_name = #{record.humanName,jdbcType=VARCHAR},
-      human_address = #{record.humanAddress,jdbcType=VARCHAR},
-      human_postcode = #{record.humanPostcode,jdbcType=VARCHAR},
-      human_pro_designation = #{record.humanProDesignation,jdbcType=VARCHAR},
-      human_major_id = #{record.humanMajorId,jdbcType=INTEGER},
-      human_telephone = #{record.humanTelephone,jdbcType=VARCHAR},
-      human_mobilephone = #{record.humanMobilephone,jdbcType=CHAR},
-      human_bank = #{record.humanBank,jdbcType=VARCHAR},
-      human_account = #{record.humanAccount,jdbcType=VARCHAR},
-      human_qq = #{record.humanQq,jdbcType=VARCHAR},
-      human_email = #{record.humanEmail,jdbcType=VARCHAR},
-      human_hobby = #{record.humanHobby,jdbcType=VARCHAR},
-      human_speciality = #{record.humanSpeciality,jdbcType=VARCHAR},
-      human_sex = #{record.humanSex,jdbcType=CHAR},
-      human_religion = #{record.humanReligion,jdbcType=VARCHAR},
-      human_party = #{record.humanParty,jdbcType=VARCHAR},
-      human_nationality = #{record.humanNationality,jdbcType=VARCHAR},
-      human_race = #{record.humanRace,jdbcType=VARCHAR},
-      human_birthday = #{record.humanBirthday,jdbcType=TIMESTAMP},
-      human_birthplace = #{record.humanBirthplace,jdbcType=VARCHAR},
-      human_age = #{record.humanAge,jdbcType=INTEGER},
-      human_educated_degree = #{record.humanEducatedDegree,jdbcType=VARCHAR},
-      human_educated_years = #{record.humanEducatedYears,jdbcType=INTEGER},
-      human_educated_major = #{record.humanEducatedMajor,jdbcType=VARCHAR},
-      human_society_security_id = #{record.humanSocietySecurityId,jdbcType=VARCHAR},
-      human_id_card = #{record.humanIdCard,jdbcType=VARCHAR},
-      salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
-      salary_sum = #{record.salarySum,jdbcType=DECIMAL},
-      demand_salaray_sum = #{record.demandSalaraySum,jdbcType=DECIMAL},
-      paid_salary_sum = #{record.paidSalarySum,jdbcType=DECIMAL},
-      major_change_amount = #{record.majorChangeAmount,jdbcType=INTEGER},
-      bonus_amount = #{record.bonusAmount,jdbcType=INTEGER},
-      training_amount = #{record.trainingAmount,jdbcType=INTEGER},
-      file_chang_amount = #{record.fileChangAmount,jdbcType=INTEGER},
-      human_picture = #{record.humanPicture,jdbcType=VARCHAR},
-      attachment_name = #{record.attachmentName,jdbcType=VARCHAR},
-      check_status = #{record.checkStatus,jdbcType=INTEGER},
-      register = #{record.register,jdbcType=VARCHAR},
-      checker = #{record.checker,jdbcType=VARCHAR},
-      changer = #{record.changer,jdbcType=VARCHAR},
-      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
-      change_time = #{record.changeTime,jdbcType=TIMESTAMP},
-      lastly_change_time = #{record.lastlyChangeTime,jdbcType=TIMESTAMP},
-      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
-      recovery_time = #{record.recoveryTime,jdbcType=TIMESTAMP},
-      human_file_status = #{record.humanFileStatus,jdbcType=INTEGER},
-      remark = #{record.remark,jdbcType=LONGVARCHAR},
-      human_histroy_records = #{record.humanHistroyRecords,jdbcType=LONGVARCHAR},
-      human_family_membership = #{record.humanFamilyMembership,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update human_file
-    set human_id = #{record.humanId,jdbcType=VARCHAR},
-      first_kind_id = #{record.firstKindId,jdbcType=INTEGER},
-      second_kind_id = #{record.secondKindId,jdbcType=INTEGER},
-      third_kind_id = #{record.thirdKindId,jdbcType=INTEGER},
-      human_name = #{record.humanName,jdbcType=VARCHAR},
-      human_address = #{record.humanAddress,jdbcType=VARCHAR},
-      human_postcode = #{record.humanPostcode,jdbcType=VARCHAR},
-      human_pro_designation = #{record.humanProDesignation,jdbcType=VARCHAR},
-      human_major_id = #{record.humanMajorId,jdbcType=INTEGER},
-      human_telephone = #{record.humanTelephone,jdbcType=VARCHAR},
-      human_mobilephone = #{record.humanMobilephone,jdbcType=CHAR},
-      human_bank = #{record.humanBank,jdbcType=VARCHAR},
-      human_account = #{record.humanAccount,jdbcType=VARCHAR},
-      human_qq = #{record.humanQq,jdbcType=VARCHAR},
-      human_email = #{record.humanEmail,jdbcType=VARCHAR},
-      human_hobby = #{record.humanHobby,jdbcType=VARCHAR},
-      human_speciality = #{record.humanSpeciality,jdbcType=VARCHAR},
-      human_sex = #{record.humanSex,jdbcType=CHAR},
-      human_religion = #{record.humanReligion,jdbcType=VARCHAR},
-      human_party = #{record.humanParty,jdbcType=VARCHAR},
-      human_nationality = #{record.humanNationality,jdbcType=VARCHAR},
-      human_race = #{record.humanRace,jdbcType=VARCHAR},
-      human_birthday = #{record.humanBirthday,jdbcType=TIMESTAMP},
-      human_birthplace = #{record.humanBirthplace,jdbcType=VARCHAR},
-      human_age = #{record.humanAge,jdbcType=INTEGER},
-      human_educated_degree = #{record.humanEducatedDegree,jdbcType=VARCHAR},
-      human_educated_years = #{record.humanEducatedYears,jdbcType=INTEGER},
-      human_educated_major = #{record.humanEducatedMajor,jdbcType=VARCHAR},
-      human_society_security_id = #{record.humanSocietySecurityId,jdbcType=VARCHAR},
-      human_id_card = #{record.humanIdCard,jdbcType=VARCHAR},
-      salary_standard_id = #{record.salaryStandardId,jdbcType=VARCHAR},
-      salary_sum = #{record.salarySum,jdbcType=DECIMAL},
-      demand_salaray_sum = #{record.demandSalaraySum,jdbcType=DECIMAL},
-      paid_salary_sum = #{record.paidSalarySum,jdbcType=DECIMAL},
-      major_change_amount = #{record.majorChangeAmount,jdbcType=INTEGER},
-      bonus_amount = #{record.bonusAmount,jdbcType=INTEGER},
-      training_amount = #{record.trainingAmount,jdbcType=INTEGER},
-      file_chang_amount = #{record.fileChangAmount,jdbcType=INTEGER},
-      human_picture = #{record.humanPicture,jdbcType=VARCHAR},
-      attachment_name = #{record.attachmentName,jdbcType=VARCHAR},
-      check_status = #{record.checkStatus,jdbcType=INTEGER},
-      register = #{record.register,jdbcType=VARCHAR},
-      checker = #{record.checker,jdbcType=VARCHAR},
-      changer = #{record.changer,jdbcType=VARCHAR},
-      regist_time = #{record.registTime,jdbcType=TIMESTAMP},
-      check_time = #{record.checkTime,jdbcType=TIMESTAMP},
-      change_time = #{record.changeTime,jdbcType=TIMESTAMP},
-      lastly_change_time = #{record.lastlyChangeTime,jdbcType=TIMESTAMP},
-      delete_time = #{record.deleteTime,jdbcType=TIMESTAMP},
-      recovery_time = #{record.recoveryTime,jdbcType=TIMESTAMP},
-      human_file_status = #{record.humanFileStatus,jdbcType=INTEGER}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.hr.entity.HumanFileWithBLOBs">
     update human_file
     <set>
@@ -869,6 +517,9 @@
       </if>
       <if test="humanMajorId != null">
         human_major_id = #{humanMajorId,jdbcType=INTEGER},
+      </if>
+       <if test="humanMajorKindId != null">
+        human_major_kind_id = #{humanMajorKindId,jdbcType=INTEGER},
       </if>
       <if test="humanTelephone != null">
         human_telephone = #{humanTelephone,jdbcType=VARCHAR},
@@ -1119,4 +770,313 @@
       human_file_status = #{humanFileStatus,jdbcType=INTEGER}
     where human_id = #{humanId,jdbcType=VARCHAR}
   </update>
+  
+<select id="queryAllHumanFile" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+<!--    select -->
+<!--      	human_id, -->
+<!--      	human_name, -->
+<!--      	human_sex, -->
+<!--       	first_kind_name, -->
+<!--      	second_kind_name, -->
+<!--      	third_kind_name, -->
+<!--      	major_kind_name, -->
+<!--         human_pro_designation -->
+<!--      from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,config_major_kind where human_file.first_kind_id=config_file_first_kind.first_kind_id and human_file.second_kind_id=config_file_second_kind.second_kind_id and human_file.third_kind_id=config_file_third_kind.third_kind_id and human_file.human_major_id=config_major_kind.major_kind_id; -->
+	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from human_file
+    where check_status = 1
+  </select>
+  
+  <select id="queryAllHumanFileByCheck_Stutas" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+   select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and check_status = 2
+  </select>
+  
+  <update id="updatePicture" parameterType="com.hr.entity.HumanFileWithBLOBs">
+    update human_file
+    <set>
+    	<if test="humanPicture != null">
+        	human_picture = #{humanPicture,jdbcType=VARCHAR}
+      </if>
+   	</set>
+    where human_id = #{humanId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateattAchmentName" parameterType="com.hr.entity.HumanFileWithBLOBs">
+    update human_file
+    <set>
+    	<if test="attachmentName != null">
+        	attachment_name = #{attachmentName,jdbcType=VARCHAR}
+      	</if>
+   	</set>
+    where human_id = #{humanId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateDelete" parameterType="com.hr.entity.HumanFileWithBLOBs">
+    update human_file
+    <set>
+    	 <if test="checkStatus != null">
+        	check_status = #{checkStatus,jdbcType=INTEGER}
+      	</if>
+   	</set>
+    where human_id = #{humanId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryAllByName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	 select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=1 and human_name like "%"#{humanName}"%" and file_chang_amount>0
+  </select>
+  
+  <select id="queryAllByCount" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+    <where>
+		<if test="record != null">
+        	and human_file.first_kind_id = #{record.firstKindId,jdbcType=INTEGER}
+       		and human_file.second_kind_id = #{record.secondKindId,jdbcType=INTEGER}
+        	and human_file.third_kind_id = #{record.thirdKindId,jdbcType=INTEGER}
+        	and human_file.human_major_id = #{record.humanMajorId,jdbcType=INTEGER}
+       	 	and human_file.human_major_kind_id = #{record.humanMajorKindId,jdbcType=INTEGER}
+      	</if>
+		and human_file.regist_time between '${startTime}' and '${endTime}'
+		and human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.file_chang_amount>0 and human_file.check_status=1
+    </where>
+  </select>
+  
+    <select id="queryAllByQueryLocate" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+    <where>
+		<if test="record != null">
+        	and human_file.first_kind_id = #{record.firstKindId,jdbcType=INTEGER}
+       		and human_file.second_kind_id = #{record.secondKindId,jdbcType=INTEGER}
+        	and human_file.third_kind_id = #{record.thirdKindId,jdbcType=INTEGER}
+        	and human_file.human_major_id = #{record.humanMajorId,jdbcType=INTEGER}
+       	 	and human_file.human_major_kind_id = #{record.humanMajorKindId,jdbcType=INTEGER}
+      	</if>
+		and human_file.regist_time between '${startTime}' and '${endTime}'
+		and human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=1
+    </where>
+  </select>
+
+    <select id="queryAllByDeleteLocate" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+    <where>
+		<if test="record != null">
+        	and human_file.first_kind_id = #{record.firstKindId,jdbcType=INTEGER}
+       		and human_file.second_kind_id = #{record.secondKindId,jdbcType=INTEGER}
+        	and human_file.third_kind_id = #{record.thirdKindId,jdbcType=INTEGER}
+        	and human_file.human_major_id = #{record.humanMajorId,jdbcType=INTEGER}
+       	 	and human_file.human_major_kind_id = #{record.humanMajorKindId,jdbcType=INTEGER}
+      	</if>
+		and human_file.regist_time between '${startTime}' and '${endTime}'
+		and human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=3
+    </where>
+  </select>
+
+ <select id="queryAllByRecoveryLocate" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+    <where>
+		<if test="record != null">
+        	and human_file.first_kind_id = #{record.firstKindId,jdbcType=INTEGER}
+       		and human_file.second_kind_id = #{record.secondKindId,jdbcType=INTEGER}
+        	and human_file.third_kind_id = #{record.thirdKindId,jdbcType=INTEGER}
+        	and human_file.human_major_id = #{record.humanMajorId,jdbcType=INTEGER}
+       	 	and human_file.human_major_kind_id = #{record.humanMajorKindId,jdbcType=INTEGER}
+      	</if>
+		and human_file.regist_time between '${startTime}' and '${endTime}'
+		and human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.recovery_time != null
+    </where>
+  </select>
+  
+ <select id="queryAllHumanFile2" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+   select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=1
+  </select>
+  
+  <select id="queryAllHumanFile3" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+   select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=1
+  </select>
+  
+  <select id="queryAllHumanFileByCheck_Stutas_delete" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+   select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and check_status = 3
+  </select>
+  
+  <select id="queryAllByDelete" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	 select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=3 and human_name like "%"#{humanName}"%"
+  </select>
+  
+  <select id="queryAllByQuery" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  	 select
+	<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+      	first_kind_name,
+     	second_kind_name,
+     	third_kind_name,
+     	major_kind_name,
+			major_name
+     from human_file,config_file_first_kind,config_file_second_kind,config_file_third_kind,
+     config_major_kind,config_major
+     where human_file.first_kind_id=config_file_first_kind.first_kind_id 
+     and human_file.second_kind_id=config_file_second_kind.second_kind_id and 
+     human_file.third_kind_id=config_file_third_kind.third_kind_id and 
+     human_file.human_major_kind_id=config_major_kind.major_kind_id and 
+		 human_file.human_major_id=config_major.major_id and human_file.check_status=1 and human_name like "%"#{humanName}"%"
+  </select>
 </mapper>
