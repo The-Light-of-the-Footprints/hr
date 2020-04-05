@@ -30,4 +30,6 @@ public class HumanFileDigWithBLOBs extends HumanFileDig {
     public void setHumanFamilyMembership(String humanFamilyMembership) {
         this.humanFamilyMembership = humanFamilyMembership == null ? null : humanFamilyMembership.trim();
     }
+    
+    
 }

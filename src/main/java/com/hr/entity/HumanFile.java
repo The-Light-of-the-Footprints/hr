@@ -1,14 +1,14 @@
 package com.hr.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 public class HumanFile {
     private String humanId;
 
     private Integer firstKindId;
-
-    private Integer secondKindId;
+    
+	private Integer secondKindId;
 
     private Integer thirdKindId;
 
@@ -21,6 +21,8 @@ public class HumanFile {
     private String humanProDesignation;
 
     private Integer humanMajorId;
+    
+    private Integer humanMajorKindId;
 
     private String humanTelephone;
 
@@ -106,7 +108,8 @@ public class HumanFile {
 
     private Integer humanFileStatus;
 
-    public String getHumanId() {
+
+	public String getHumanId() {
         return humanId;
     }
 
@@ -177,8 +180,17 @@ public class HumanFile {
     public void setHumanMajorId(Integer humanMajorId) {
         this.humanMajorId = humanMajorId;
     }
+    
 
-    public String getHumanTelephone() {
+    public Integer getHumanMajorKindId() {
+		return humanMajorKindId;
+	}
+
+	public void setHumanMajorKindId(Integer humanMajorKindId) {
+		this.humanMajorKindId = humanMajorKindId;
+	}
+
+	public String getHumanTelephone() {
         return humanTelephone;
     }
 
@@ -513,4 +525,29 @@ public class HumanFile {
     public void setHumanFileStatus(Integer humanFileStatus) {
         this.humanFileStatus = humanFileStatus;
     }
+
+	@Override
+	public String toString() {
+		return "HumanFile [humanId=" + humanId + ", firstKindId=" + firstKindId + ", secondKindId=" + secondKindId
+				+ ", thirdKindId=" + thirdKindId + ", humanName=" + humanName + ", humanAddress=" + humanAddress
+				+ ", humanPostcode=" + humanPostcode + ", humanProDesignation=" + humanProDesignation
+				+ ", humanMajorId=" + humanMajorId + ", humanMajorKindId=" + humanMajorKindId + ", humanTelephone="
+				+ humanTelephone + ", humanMobilephone=" + humanMobilephone + ", humanBank=" + humanBank
+				+ ", humanAccount=" + humanAccount + ", humanQq=" + humanQq + ", humanEmail=" + humanEmail
+				+ ", humanHobby=" + humanHobby + ", humanSpeciality=" + humanSpeciality + ", humanSex=" + humanSex
+				+ ", humanReligion=" + humanReligion + ", humanParty=" + humanParty + ", humanNationality="
+				+ humanNationality + ", humanRace=" + humanRace + ", humanBirthday=" + humanBirthday
+				+ ", humanBirthplace=" + humanBirthplace + ", humanAge=" + humanAge + ", humanEducatedDegree="
+				+ humanEducatedDegree + ", humanEducatedYears=" + humanEducatedYears + ", humanEducatedMajor="
+				+ humanEducatedMajor + ", humanSocietySecurityId=" + humanSocietySecurityId + ", humanIdCard="
+				+ humanIdCard + ", salaryStandardId=" + salaryStandardId + ", salarySum=" + salarySum
+				+ ", demandSalaraySum=" + demandSalaraySum + ", paidSalarySum=" + paidSalarySum + ", majorChangeAmount="
+				+ majorChangeAmount + ", bonusAmount=" + bonusAmount + ", trainingAmount=" + trainingAmount
+				+ ", fileChangAmount=" + fileChangAmount + ", humanPicture=" + humanPicture + ", attachmentName="
+				+ attachmentName + ", checkStatus=" + checkStatus + ", register=" + register + ", checker=" + checker
+				+ ", changer=" + changer + ", registTime=" + registTime + ", checkTime=" + checkTime + ", changeTime="
+				+ changeTime + ", lastlyChangeTime=" + lastlyChangeTime + ", deleteTime=" + deleteTime
+				+ ", recoveryTime=" + recoveryTime + ", humanFileStatus=" + humanFileStatus + "]";
+	}
+    
 }
